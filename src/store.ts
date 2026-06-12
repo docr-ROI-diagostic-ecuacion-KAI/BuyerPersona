@@ -25,3 +25,5 @@ export const usePersonaStore = create<PersonaStore>()(
     { name: "doc-roi-buyer-persona" },
   ),
 );
+
+(globalThis as any).__docroiPersonaStore = usePersonaStore;
