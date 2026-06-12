@@ -24,6 +24,7 @@ export const initialData: BuyerPersonaData = {
   mainCondition: "",
   digitalGeneration: "Profesional híbrido",
   avatar: "BP",
+  avatarUrl: "",
   needsToSolve: "",
   mainConcern: "",
   desiredGain: "",
