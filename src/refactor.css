@@ -95,14 +95,16 @@
   gap: 0;
 }
 
-.objective-panel div {
-  grid-template-columns: minmax(128px, max-content) minmax(0, 1fr);
-  column-gap: 18px;
+.objective-panel dl > div {
+  display: grid !important;
+  grid-template-columns: 154px minmax(0, 1fr) !important;
+  column-gap: 20px !important;
   align-items: start;
 }
 
 .objective-panel dt {
   white-space: nowrap;
+  min-width: 0;
 }
 
 .objective-panel dd {
@@ -146,9 +148,9 @@
   }
 }
 
-@media (max-width: 520px) {
-  .objective-panel div {
-    grid-template-columns: 1fr;
+@media (max-width: 560px) {
+  .objective-panel dl > div {
+    grid-template-columns: 1fr !important;
     row-gap: 6px;
   }
 }
