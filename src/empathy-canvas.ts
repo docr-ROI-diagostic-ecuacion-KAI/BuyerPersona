@@ -39,13 +39,13 @@ function installEmpathyCanvasStyles() {
       border: 14px solid #05070b;
       border-radius: 26px;
       background:
-        linear-gradient(135deg, transparent 49.5%, rgba(5,7,11,.18) 50%, transparent 50.5%),
-        linear-gradient(45deg, transparent 49.5%, rgba(5,7,11,.14) 50%, transparent 50.5%),
+        linear-gradient(135deg, transparent 49.5%, rgba(5,7,11,.14) 50%, transparent 50.5%),
+        linear-gradient(45deg, transparent 49.5%, rgba(5,7,11,.10) 50%, transparent 50.5%),
         #ffffff !important;
       color: #05070b !important;
       padding: 14px !important;
       min-height: 430px;
-      box-shadow: 0 24px 60px rgba(5, 7, 11, .10);
+      box-shadow: none !important;
     }
     .empathy-bridge.docroi-empathy-canvas::before {
       content: "mapa de empatía · lectura humana + traducción digital";
@@ -59,7 +59,7 @@ function installEmpathyCanvasStyles() {
       padding: 0 22px;
       background: #05070b;
       color: #ffffff;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 900;
       letter-spacing: .01em;
       z-index: 0;
@@ -75,18 +75,18 @@ function installEmpathyCanvasStyles() {
       align-items: center !important;
       justify-content: center !important;
       text-align: center !important;
-      padding: 16px !important;
+      padding: 14px !important;
       min-height: 92px;
-      font-size: clamp(17px, 2.2vw, 24px) !important;
-      line-height: 1.12 !important;
+      font-size: clamp(15px, 1.85vw, 20px) !important;
+      line-height: 1.14 !important;
       font-weight: 900 !important;
-      box-shadow: 0 10px 26px rgba(0, 59, 92, .06);
+      box-shadow: none !important;
     }
     .empathy-bridge.docroi-empathy-canvas .bridge-top {
       grid-area: header !important;
       margin-top: 52px;
       min-height: 54px;
-      font-size: clamp(19px, 2.4vw, 28px) !important;
+      font-size: clamp(17px, 2vw, 22px) !important;
     }
     .empathy-bridge.docroi-empathy-canvas .bridge-left { grid-area: hear !important; }
     .empathy-bridge.docroi-empathy-canvas .bridge-right { grid-area: see !important; }
@@ -112,7 +112,7 @@ function installEmpathyCanvasStyles() {
     .empathy-bridge.docroi-empathy-canvas .bridge-gain { grid-area: gain !important; }
     .docroi-empathy-kicker {
       color: #003b5c;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 900;
       letter-spacing: .04em;
       text-transform: uppercase;
@@ -124,7 +124,7 @@ function installEmpathyCanvasStyles() {
       border: 3px solid #0b63ce;
       background: #eaf6fb;
       object-fit: cover;
-      box-shadow: 0 16px 38px rgba(0, 59, 92, .18);
+      box-shadow: 0 8px 18px rgba(0, 59, 92, .12);
     }
     .docroi-empathy-name {
       max-width: 180px;
@@ -132,7 +132,7 @@ function installEmpathyCanvasStyles() {
       background: #05070b;
       color: #fff;
       padding: 9px 12px;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.1;
       font-weight: 900;
     }
