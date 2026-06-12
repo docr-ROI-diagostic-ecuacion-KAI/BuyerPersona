@@ -91,6 +91,27 @@
   font-size: 14px;
 }
 
+.objective-panel dl {
+  gap: 0;
+}
+
+.objective-panel div {
+  grid-template-columns: minmax(128px, max-content) minmax(0, 1fr);
+  column-gap: 18px;
+  align-items: start;
+}
+
+.objective-panel dt {
+  white-space: nowrap;
+}
+
+.objective-panel dd {
+  min-width: 0;
+  overflow-wrap: normal;
+  word-break: normal;
+  line-height: 1.35;
+}
+
 .empathy-bridge > div {
   color: #003b5c !important;
 }
@@ -122,5 +143,12 @@
 
   .method-sticky {
     position: static;
+  }
+}
+
+@media (max-width: 520px) {
+  .objective-panel div {
+    grid-template-columns: 1fr;
+    row-gap: 6px;
   }
 }
