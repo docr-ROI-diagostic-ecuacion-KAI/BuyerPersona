@@ -42,78 +42,80 @@ function installEmpathyCanvasStyles() {
     .empathy-bridge.docroi-empathy-canvas {
       position: relative;
       display: grid !important;
-      grid-template-columns: 1fr 1.1fr 1fr !important;
+      grid-template-columns: minmax(0, 1fr) !important;
       grid-template-areas:
-        "think think think"
-        "hear center see"
-        "say center say"
-        "pain need gain" !important;
-      gap: 10px !important;
-      overflow: hidden;
-      border: 14px solid #05070b;
-      border-radius: 26px;
-      background:
-        linear-gradient(135deg, transparent 49.5%, rgba(5,7,11,.12) 50%, transparent 50.5%),
-        linear-gradient(45deg, transparent 49.5%, rgba(5,7,11,.08) 50%, transparent 50.5%),
-        #ffffff !important;
+        "center"
+        "think"
+        "hear"
+        "see"
+        "say"
+        "pain"
+        "need"
+        "gain" !important;
+      gap: 12px !important;
+      overflow: visible !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: #ffffff !important;
       color: #05070b !important;
-      padding: 14px !important;
-      min-height: 610px;
+      padding: 0 !important;
+      min-height: 0 !important;
       box-shadow: none !important;
+      text-align: left !important;
     }
     .empathy-bridge.docroi-empathy-canvas::before {
       content: "mapa de empatía · buyer persona · lectura humana + traducción digital";
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      height: 54px;
-      display: flex;
-      align-items: center;
-      padding: 0 22px;
+      display: block;
+      position: static;
+      height: auto;
+      grid-row: 1;
+      margin: 0 0 2px;
+      border-radius: 18px;
       background: #05070b;
       color: #ffffff;
+      padding: 14px 18px;
       font-size: 12px;
       font-weight: 900;
       letter-spacing: .01em;
-      z-index: 0;
+      text-align: center;
     }
     .empathy-bridge.docroi-empathy-canvas > div {
       position: relative;
       z-index: 1;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
       border: 1px solid #d8ecf8 !important;
-      border-radius: 16px !important;
-      background: rgba(255,255,255,.97) !important;
+      border-radius: 18px !important;
+      background: rgba(255,255,255,.98) !important;
       color: #003b5c !important;
       display: block !important;
       text-align: left !important;
-      padding: 13px !important;
-      min-height: 126px;
+      padding: 14px !important;
+      min-height: 0 !important;
       font-size: 13px !important;
       line-height: 1.38 !important;
       font-weight: 700 !important;
       box-shadow: none !important;
+      box-sizing: border-box !important;
     }
-    .empathy-bridge.docroi-empathy-canvas .bridge-top {
-      grid-area: think !important;
-      margin-top: 52px;
-      min-height: 148px;
-    }
-    .empathy-bridge.docroi-empathy-canvas .bridge-left { grid-area: hear !important; }
-    .empathy-bridge.docroi-empathy-canvas .bridge-right { grid-area: see !important; }
-    .empathy-bridge.docroi-empathy-canvas .bridge-bottom { grid-area: say !important; }
     .empathy-bridge.docroi-empathy-canvas .bridge-center {
       grid-area: center !important;
       display: grid !important;
       align-content: center !important;
       justify-items: center !important;
       gap: 8px !important;
-      min-height: 282px;
+      min-height: 0 !important;
       text-align: center !important;
       background: linear-gradient(180deg, #ffffff, #f6fbfe) !important;
       border-color: #b9dcf0 !important;
       padding: 18px !important;
+      margin-top: 0 !important;
     }
+    .empathy-bridge.docroi-empathy-canvas .bridge-top { grid-area: think !important; margin-top: 0 !important; }
+    .empathy-bridge.docroi-empathy-canvas .bridge-left { grid-area: hear !important; }
+    .empathy-bridge.docroi-empathy-canvas .bridge-right { grid-area: see !important; }
+    .empathy-bridge.docroi-empathy-canvas .bridge-bottom { grid-area: say !important; }
     .empathy-bridge.docroi-empathy-canvas .bridge-pain { grid-area: pain !important; }
     .empathy-bridge.docroi-empathy-canvas .bridge-need {
       grid-area: need !important;
@@ -133,9 +135,7 @@ function installEmpathyCanvasStyles() {
       font-weight: 900;
       text-transform: uppercase;
     }
-    .bridge-need .docroi-empathy-card-inner h4 {
-      color: #ffffff;
-    }
+    .bridge-need .docroi-empathy-card-inner h4 { color: #ffffff; }
     .docroi-empathy-card-inner ul {
       display: grid;
       gap: 4px;
@@ -143,9 +143,7 @@ function installEmpathyCanvasStyles() {
       padding-left: 16px;
       color: #05070b;
     }
-    .bridge-need .docroi-empathy-card-inner ul {
-      color: #eaf6fb;
-    }
+    .bridge-need .docroi-empathy-card-inner ul { color: #eaf6fb; }
     .docroi-empathy-card-inner li {
       font-size: 12px;
       line-height: 1.32;
@@ -175,9 +173,7 @@ function installEmpathyCanvasStyles() {
       margin-bottom: 3px;
       text-transform: uppercase;
     }
-    .bridge-need .docroi-reco span {
-      color: #d8ecf8;
-    }
+    .bridge-need .docroi-reco span { color: #d8ecf8; }
     .docroi-empathy-help {
       position: relative;
       display: inline-flex;
@@ -224,8 +220,8 @@ function installEmpathyCanvasStyles() {
       text-transform: uppercase;
     }
     .docroi-empathy-avatar {
-      width: 138px;
-      height: 138px;
+      width: 136px;
+      height: 136px;
       border-radius: 999px;
       border: 3px solid #0b63ce;
       background: #eaf6fb;
@@ -243,28 +239,6 @@ function installEmpathyCanvasStyles() {
       font-weight: 900;
       text-align: center;
     }
-    @media (max-width: 720px) {
-      .empathy-bridge.docroi-empathy-canvas {
-        grid-template-columns: 1fr !important;
-        grid-template-areas:
-          "think"
-          "center"
-          "hear"
-          "see"
-          "say"
-          "pain"
-          "need"
-          "gain" !important;
-        min-height: 0;
-      }
-      .empathy-bridge.docroi-empathy-canvas .bridge-center {
-        min-height: 220px;
-      }
-      .docroi-empathy-avatar {
-        width: 116px;
-        height: 116px;
-      }
-    }
   `;
   document.head.appendChild(style);
 }
@@ -280,11 +254,18 @@ function renderEmpathyCanvas() {
   const data = personaData();
   const avatar = avatarForPersona(data);
   const name = data.fictionalName || "cliente / buyer persona";
-  const marker = `${avatar}|${name}|docroi-rich-v2`;
+  const marker = `${avatar}|${name}|docroi-vertical-v1`;
   if (bridge.dataset.empathyCanvas === marker) return;
 
   bridge.dataset.empathyCanvas = marker;
   bridge.classList.add("docroi-empathy-canvas");
+
+  center.innerHTML = `
+    <span class="docroi-empathy-kicker">qué piensa</span>
+    <img class="docroi-empathy-avatar" src="${avatar}" alt="${name}">
+    <strong class="docroi-empathy-name">${name}</strong>
+    <span class="docroi-empathy-kicker">qué siente</span>
+  `;
 
   bridge.querySelector<HTMLElement>(".bridge-top")!.innerHTML = card(
     "¿Qué piensa y siente?",
@@ -325,13 +306,6 @@ function renderEmpathyCanvas() {
     "Valor percibido cuando la decisión sale bien.",
     ["Deseos y necesidades satisfechas.", "Medida del éxito: satisfacción, durabilidad o recomendación.", "Beneficios percibidos: confianza, claridad y seguridad de compra."],
   );
-
-  center.innerHTML = `
-    <span class="docroi-empathy-kicker">qué piensa</span>
-    <img class="docroi-empathy-avatar" src="${avatar}" alt="${name}">
-    <strong class="docroi-empathy-name">${name}</strong>
-    <span class="docroi-empathy-kicker">qué siente</span>
-  `;
 }
 
 function scheduleEmpathyCanvas() {
