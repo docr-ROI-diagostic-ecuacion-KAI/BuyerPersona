@@ -94,29 +94,40 @@
 .field > span:has(.docroi-info) {
   justify-content: flex-start !important;
   align-items: center !important;
-  gap: 8px;
+  gap: 7px;
 }
 
 .slider > span:has(.docroi-info) {
   align-items: center !important;
-  gap: 8px;
+  gap: 7px;
 }
 
 .docroi-info {
-  width: 24px !important;
-  height: 24px !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
   margin-left: 0 !important;
   border: 1px solid #d8ecf8 !important;
-  background: linear-gradient(180deg, #eaf6fb, #d8ecf8) !important;
+  background: linear-gradient(180deg, #f6fbfe, #d8ecf8) !important;
   color: #003b5c !important;
-  box-shadow: 0 8px 18px rgba(0, 59, 92, .12) !important;
-  font-size: 13px !important;
+  box-shadow: 0 6px 14px rgba(0, 59, 92, .10) !important;
+  font-size: 11px !important;
   font-weight: 900 !important;
+  line-height: 20px !important;
+  text-align: center !important;
+  padding: 0 !important;
+  vertical-align: middle !important;
 }
 
 .docroi-info::before {
   content: "?" !important;
-  transform: translateY(-.5px);
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 18px;
+  text-align: center;
+  transform: none !important;
 }
 
 .docroi-info:hover,
