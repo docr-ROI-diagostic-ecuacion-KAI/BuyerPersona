@@ -8,6 +8,8 @@ const generationAvatars: Record<string, string> = {
   "Alpha emergente": "/avatars/gen-alpha.svg",
 };
 
+const docRoiLogo = "https://docroi.marketing/wp-content/uploads/2026/05/Logo_Negro_DoC_ROI.jpg";
+
 function empathyStepIsActive(): boolean {
   return document.querySelector(".builder-head h2")?.textContent?.trim() === "Empatizar";
 }
@@ -20,227 +22,246 @@ function avatarForPersona(data: any): string {
   return data.avatarUrl || generationAvatars[data.digitalGeneration] || "/avatars/millennial.svg";
 }
 
-function info(label: string): string {
-  return `<span class="docroi-empathy-help" data-help="${label}">?</span>`;
-}
-
-function card(title: string, help: string, items: string[], recommendation?: string): string {
-  return `
-    <div class="docroi-empathy-card-inner">
-      <h4>${title} ${info(help)}</h4>
-      <ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>
-      ${recommendation ? `<div class="docroi-reco"><span>recomendación doc roi</span>${recommendation}</div>` : ""}
-    </div>
-  `;
-}
-
 function installEmpathyCanvasStyles() {
   if (document.getElementById("docroi-empathy-canvas-style")) return;
   const style = document.createElement("style");
   style.id = "docroi-empathy-canvas-style";
   style.textContent = `
     .empathy-bridge.docroi-empathy-canvas {
-      position: relative;
-      display: grid !important;
-      grid-template-columns: minmax(0, 1fr) !important;
-      grid-template-areas:
-        "center"
-        "think"
-        "hear"
-        "see"
-        "say"
-        "pain"
-        "need"
-        "gain" !important;
-      gap: 12px !important;
-      overflow: visible !important;
+      display: block !important;
       border: 0 !important;
       border-radius: 0 !important;
-      background: #ffffff !important;
-      color: #05070b !important;
+      background: transparent !important;
       padding: 0 !important;
-      min-height: 0 !important;
+      color: #05070b !important;
       box-shadow: none !important;
+      overflow: visible !important;
       text-align: left !important;
     }
-    .empathy-bridge.docroi-empathy-canvas::before {
-      content: "mapa de empatía · buyer persona · lectura humana + traducción digital";
-      display: block;
-      position: static;
-      height: auto;
-      grid-row: 1;
-      margin: 0 0 2px;
-      border-radius: 18px;
+    .empathy-bridge.docroi-empathy-canvas > :not(.docroi-empathy-infographic) {
+      display: none !important;
+    }
+    .docroi-empathy-infographic {
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+      border-radius: 22px;
+      background: #ffffff;
+      border: 1px solid #d8ecf8;
+      box-shadow: none;
+    }
+    .docroi-empathy-head {
+      display: grid;
+      grid-template-columns: 138px 1fr;
+      gap: 16px;
+      align-items: center;
       background: #05070b;
       color: #ffffff;
-      padding: 14px 18px;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: .01em;
-      text-align: center;
+      padding: 18px;
     }
-    .empathy-bridge.docroi-empathy-canvas > div {
-      position: relative;
-      z-index: 1;
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: 0 !important;
-      border: 1px solid #d8ecf8 !important;
-      border-radius: 18px !important;
-      background: rgba(255,255,255,.98) !important;
-      color: #003b5c !important;
-      display: block !important;
-      text-align: left !important;
-      padding: 14px !important;
-      min-height: 0 !important;
-      font-size: 13px !important;
-      line-height: 1.38 !important;
-      font-weight: 700 !important;
-      box-shadow: none !important;
-      box-sizing: border-box !important;
-    }
-    .empathy-bridge.docroi-empathy-canvas .bridge-center {
-      grid-area: center !important;
-      display: grid !important;
-      align-content: center !important;
-      justify-items: center !important;
-      gap: 8px !important;
-      min-height: 0 !important;
-      text-align: center !important;
-      background: linear-gradient(180deg, #ffffff, #f6fbfe) !important;
-      border-color: #b9dcf0 !important;
-      padding: 18px !important;
-      margin-top: 0 !important;
-    }
-    .empathy-bridge.docroi-empathy-canvas .bridge-top { grid-area: think !important; margin-top: 0 !important; }
-    .empathy-bridge.docroi-empathy-canvas .bridge-left { grid-area: hear !important; }
-    .empathy-bridge.docroi-empathy-canvas .bridge-right { grid-area: see !important; }
-    .empathy-bridge.docroi-empathy-canvas .bridge-bottom { grid-area: say !important; }
-    .empathy-bridge.docroi-empathy-canvas .bridge-pain { grid-area: pain !important; }
-    .empathy-bridge.docroi-empathy-canvas .bridge-need {
-      grid-area: need !important;
-      background: #05070b !important;
-      border-color: #05070b !important;
-      color: #d8ecf8 !important;
-    }
-    .empathy-bridge.docroi-empathy-canvas .bridge-gain { grid-area: gain !important; }
-    .docroi-empathy-card-inner h4 {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      margin: 0 0 7px;
-      color: #05070b;
-      font-size: 15px;
-      line-height: 1.1;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
-    .bridge-need .docroi-empathy-card-inner h4 { color: #ffffff; }
-    .docroi-empathy-card-inner ul {
-      display: grid;
-      gap: 4px;
-      margin: 0;
-      padding-left: 16px;
-      color: #05070b;
-    }
-    .bridge-need .docroi-empathy-card-inner ul { color: #eaf6fb; }
-    .docroi-empathy-card-inner li {
-      font-size: 12px;
-      line-height: 1.32;
-      font-weight: 650;
-    }
-    .docroi-reco {
-      margin-top: 9px;
-      border: 1px solid #b9dcf0;
-      border-radius: 12px;
-      background: #f6fbfe;
-      color: #003b5c;
-      padding: 8px 9px;
-      font-size: 11px;
-      line-height: 1.32;
-      font-weight: 800;
-    }
-    .bridge-need .docroi-reco {
-      background: rgba(216,236,248,.1);
-      color: #f6fbfe;
-      border-color: rgba(216,236,248,.22);
-    }
-    .docroi-reco span {
+    .docroi-empathy-head img {
+      width: 128px;
+      max-width: 100%;
+      border-radius: 10px;
       display: block;
+    }
+    .docroi-empathy-head h4 {
+      margin: 0;
+      color: #ffffff;
+      font-size: clamp(24px, 4.8vw, 42px);
+      line-height: .95;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-transform: lowercase;
+    }
+    .docroi-empathy-head h4 span {
       color: #0b63ce;
-      font-size: 10px;
-      font-weight: 900;
-      margin-bottom: 3px;
-      text-transform: uppercase;
     }
-    .bridge-need .docroi-reco span { color: #d8ecf8; }
-    .docroi-empathy-help {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #d8ecf8;
-      color: #003b5c;
-      font-size: 10px;
-      font-weight: 900;
-      flex: 0 0 auto;
-    }
-    .docroi-empathy-help::after {
-      content: attr(data-help);
-      position: absolute;
-      left: 50%;
-      bottom: calc(100% + 8px);
-      width: min(260px, 72vw);
-      transform: translateX(-50%) translateY(4px);
-      border-radius: 12px;
-      background: rgba(5,7,11,.92);
-      color: #fff;
-      padding: 10px 12px;
-      font-size: 11px;
-      line-height: 1.4;
+    .docroi-empathy-head p {
+      margin: 8px 0 0;
+      color: #eaf6fb;
+      font-size: 14px;
+      line-height: 1.35;
       font-weight: 700;
-      text-transform: none;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .16s ease, transform .16s ease;
-      z-index: 40;
     }
-    .docroi-empathy-help:hover::after {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
+    .docroi-empathy-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+      padding: 16px;
+      background:
+        radial-gradient(circle at 50% 260px, rgba(11,99,206,.11), transparent 260px),
+        linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
     }
-    .docroi-empathy-kicker {
+    .docroi-persona-stage {
+      display: grid;
+      justify-items: center;
+      gap: 10px;
+      padding: 20px 14px;
+      border: 1px solid #d8ecf8;
+      border-radius: 20px;
+      background: rgba(255,255,255,.92);
+    }
+    .docroi-persona-stage::before {
+      content: "cliente / buyer persona";
       color: #003b5c;
-      font-size: 9px;
+      font-size: 11px;
       font-weight: 900;
       letter-spacing: .04em;
       text-transform: uppercase;
     }
-    .docroi-empathy-avatar {
-      width: 136px;
-      height: 136px;
+    .docroi-persona-stage img {
+      width: min(210px, 62vw);
+      height: min(210px, 62vw);
       border-radius: 999px;
       border: 3px solid #0b63ce;
       background: #eaf6fb;
       object-fit: cover;
-      box-shadow: 0 8px 18px rgba(0, 59, 92, .12);
+      box-shadow: 0 10px 24px rgba(0, 59, 92, .14);
     }
-    .docroi-empathy-name {
-      max-width: 190px;
+    .docroi-persona-name {
+      max-width: 260px;
       border-radius: 16px;
       background: #05070b;
-      color: #fff;
-      padding: 9px 12px;
-      font-size: 14px;
+      color: #ffffff;
+      padding: 10px 14px;
+      text-align: center;
+      font-size: 18px;
       line-height: 1.1;
       font-weight: 900;
-      text-align: center;
+    }
+    .docroi-info-card {
+      border: 1px solid #dbe7f1;
+      border-radius: 20px;
+      background: rgba(255,255,255,.96);
+      padding: 16px;
+      box-shadow: none;
+    }
+    .docroi-info-card h5 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 8px;
+      color: #05070b;
+      font-size: 22px;
+      line-height: 1.05;
+      font-weight: 900;
+      text-transform: lowercase;
+    }
+    .docroi-info-card h5 i,
+    .docroi-channel h5 i {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #0b63ce;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-style: normal;
+      font-size: 17px;
+      flex: 0 0 auto;
+    }
+    .docroi-info-card ul,
+    .docroi-channel ul {
+      margin: 0;
+      padding-left: 20px;
+      display: grid;
+      gap: 4px;
+      color: #05070b;
+    }
+    .docroi-info-card li,
+    .docroi-channel li {
+      font-size: 14px;
+      line-height: 1.34;
+      font-weight: 600;
+    }
+    .docroi-reco-box {
+      margin-top: 13px;
+      border-radius: 16px;
+      background: #f0f7fd;
+      border: 1px solid #d8ecf8;
+      padding: 13px;
+      color: #003b5c;
+    }
+    .docroi-reco-box strong {
+      display: block;
+      color: #0b63ce;
+      font-size: 14px;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      font-weight: 900;
+      text-transform: lowercase;
+    }
+    .docroi-reco-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px 14px;
+    }
+    .docroi-reco-grid span {
+      color: #05070b;
+      font-size: 12px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+    .docroi-channel {
+      border: 1px solid #d8ecf8;
+      border-radius: 20px;
+      background: #f8fbfd;
+      padding: 16px;
+    }
+    .docroi-channel h5 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 12px;
+      color: #05070b;
+      font-size: 22px;
+      line-height: 1.05;
+      font-weight: 900;
+      text-transform: lowercase;
+    }
+    .docroi-channel h5 span {
+      color: #0b63ce;
+    }
+    .docroi-channel-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      border-top: 1px solid #d8ecf8;
+      padding-top: 12px;
+    }
+    .docroi-channel-grid strong {
+      display: block;
+      color: #0b63ce;
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: lowercase;
+    }
+    @media (max-width: 620px) {
+      .docroi-empathy-head {
+        grid-template-columns: 1fr;
+        text-align: center;
+        justify-items: center;
+      }
+      .docroi-reco-grid,
+      .docroi-channel-grid {
+        grid-template-columns: 1fr;
+      }
     }
   `;
   document.head.appendChild(style);
+}
+
+function card(title: string, icon: string, items: string[], reco?: string[]): string {
+  return `
+    <section class="docroi-info-card">
+      <h5><i>${icon}</i>${title}</h5>
+      <ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>
+      ${reco ? `<div class="docroi-reco-box"><strong>aportación doc roi · traducción digital</strong><div class="docroi-reco-grid">${reco.map((item) => `<span>${item}</span>`).join("")}</div></div>` : ""}
+    </section>
+  `;
 }
 
 function renderEmpathyCanvas() {
@@ -248,64 +269,73 @@ function renderEmpathyCanvas() {
   if (!empathyStepIsActive()) return;
 
   const bridge = document.querySelector<HTMLElement>(".empathy-bridge");
-  const center = bridge?.querySelector<HTMLElement>(".bridge-center");
-  if (!bridge || !center) return;
+  if (!bridge) return;
 
   const data = personaData();
   const avatar = avatarForPersona(data);
   const name = data.fictionalName || "cliente / buyer persona";
-  const marker = `${avatar}|${name}|docroi-vertical-v1`;
+  const marker = `${avatar}|${name}|docroi-infographic-v1`;
   if (bridge.dataset.empathyCanvas === marker) return;
 
   bridge.dataset.empathyCanvas = marker;
   bridge.classList.add("docroi-empathy-canvas");
-
-  center.innerHTML = `
-    <span class="docroi-empathy-kicker">qué piensa</span>
-    <img class="docroi-empathy-avatar" src="${avatar}" alt="${name}">
-    <strong class="docroi-empathy-name">${name}</strong>
-    <span class="docroi-empathy-kicker">qué siente</span>
+  bridge.innerHTML = `
+    <article class="docroi-empathy-infographic">
+      <header class="docroi-empathy-head">
+        <img src="${docRoiLogo}" alt="Doc ROI">
+        <div>
+          <h4>mapa de empatía · <span>doc roi</span></h4>
+          <p>buyer persona · lectura humana + traducción digital</p>
+        </div>
+      </header>
+      <div class="docroi-empathy-body">
+        <section class="docroi-persona-stage">
+          <img src="${avatar}" alt="${name}">
+          <strong class="docroi-persona-name">${name}</strong>
+        </section>
+        ${card("¿qué ve?", "◉", [
+          "tendencias de moda y estilo en el mercado",
+          "variedad de productos y colecciones",
+          "escaparates, catálogos y campañas publicitarias",
+          "marcas reconocidas y nuevas propuestas",
+          "reseñas, valoraciones y recomendaciones",
+          "comparativas de precios y calidad",
+          "experiencias de otros clientes",
+        ], ["modalidad: presencial · online · híbrida", "vídeos / reels", "contenido que consume antes de comprar", "web de marca", "reseñas", "marketplaces", "comparativas", "ugc / redes sociales"])}
+        ${card("¿qué oye?", "◌", [
+          "opiniones de amigos y entorno",
+          "recomendaciones de influencers o expertos",
+          "mensajes de marca",
+          "comentarios sobre calidad, comodidad y estilo",
+        ])}
+        ${card("¿qué hace?", "↗", [
+          "busca, compara y prueba",
+          "consulta opiniones y precios",
+          "visita tienda física o web",
+        ], ["distribución física", "online", "telefónica", "híbrida"])}
+        ${card("¿qué piensa y siente?", "♥", [
+          "qué siente sobre el producto",
+          "comodidad, estética y confianza",
+          "qué piensa del precio",
+          "si merece la inversión",
+          "miedo a equivocarse",
+          "deseo de acertar con la compra",
+        ])}
+        ${card("¿qué dice?", "●", [
+          "cómo describe el producto",
+          "qué comenta a otros",
+          "qué objeciones verbaliza",
+        ], ["cómo lo promociona", "qué lenguaje utiliza al recomendarlo"])}
+        <section class="docroi-channel">
+          <h5><i>⌘</i>canalidad · <span>aportación doc roi</span></h5>
+          <div class="docroi-channel-grid">
+            <div><strong>medios</strong><ul><li>Email</li><li>Web</li><li>Redes sociales</li><li>Canales audiovisuales</li><li>Apps</li><li>IA conversacional</li><li>Eventos</li><li>Podcasts</li><li>Comunidades</li></ul></div>
+            <div><strong>intención</strong><ul><li>aprender</li><li>resolver</li><li>comparar</li><li>comprar</li><li>autoridad profesional</li><li>automatizar</li><li>delegar</li><li>mejorar productividad</li></ul></div>
+          </div>
+        </section>
+      </div>
+    </article>
   `;
-
-  bridge.querySelector<HTMLElement>(".bridge-top")!.innerHTML = card(
-    "¿Qué piensa y siente?",
-    "Lo que realmente importa: preocupaciones, aspiraciones, miedos, deseo de acertar y percepción de valor.",
-    ["Qué piensa del precio y del riesgo.", "Si percibe valor por lo que paga.", "Qué le genera comodidad, estética o confianza."],
-    "Investiga precio, producto y confianza: ¿lo considera justo?, ¿qué siente del producto?, ¿cómo percibe comodidad y estética?",
-  );
-  bridge.querySelector<HTMLElement>(".bridge-left")!.innerHTML = card(
-    "¿Qué oye?",
-    "Influencia externa: recomendaciones, expertos, entorno, mensajes de marca y comentarios sobre calidad.",
-    ["Qué dicen amigos, colegas o comunidad.", "Qué recomiendan expertos o influencers.", "Qué mensajes de marca recuerda."],
-    "Observa contenidos que consume antes de comprar: reseñas, comparativas, rankings, UGC y experiencias de otros clientes.",
-  );
-  bridge.querySelector<HTMLElement>(".bridge-right")!.innerHTML = card(
-    "¿Qué ve?",
-    "Entorno visible de decisión: tendencias, productos, precios, competidores, canales y pruebas sociales.",
-    ["Qué ofertas y alternativas compara.", "Qué marcas reconoce como referencia.", "Qué señales visuales le dan seguridad."],
-    "Conecta canales, contenidos e intención: descubrir, comparar, validar y comprar.",
-  );
-  bridge.querySelector<HTMLElement>(".bridge-bottom")!.innerHTML = card(
-    "¿Qué dice y hace?",
-    "Conducta observable: cómo verbaliza objeciones, qué comenta, qué comparte y qué acciones realiza.",
-    ["Cómo describe el producto.", "Qué objeciones verbaliza.", "Qué comportamiento muestra en redes, web o conversación comercial."],
-    "Traduce lo que dice a lenguaje comercial, canales elegidos, tono de mensaje y relación preferida.",
-  );
-  bridge.querySelector<HTMLElement>(".bridge-pain")!.innerHTML = card(
-    "Esfuerzos (pains)",
-    "Costes, bloqueos y fricciones que pueden impedir la decisión.",
-    ["Miedo a equivocarse o perder dinero.", "Frustración por información confusa.", "Obstáculos de precio, disponibilidad o desconfianza."],
-  );
-  bridge.querySelector<HTMLElement>(".bridge-need")!.innerHTML = card(
-    "Necesidad central",
-    "La tensión principal que conecta problema, motivación y valor esperado.",
-    ["Qué necesita resolver ahora.", "Qué resultado considera éxito.", "Qué evidencia reduce su incertidumbre."],
-  );
-  bridge.querySelector<HTMLElement>(".bridge-gain")!.innerHTML = card(
-    "Beneficios (gain)",
-    "Valor percibido cuando la decisión sale bien.",
-    ["Deseos y necesidades satisfechas.", "Medida del éxito: satisfacción, durabilidad o recomendación.", "Beneficios percibidos: confianza, claridad y seguridad de compra."],
-  );
 }
 
 function scheduleEmpathyCanvas() {
