@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { AppCorrected } from "./AppCorrected";
+import { App2 } from "./App2";
+import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <AppCorrected />
+    <App2 />
   </React.StrictMode>,
 );
