@@ -3,13 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Conexión Buyer Persona · Doc ROI</title>
+    <title>Sistema de Perfilado del Buyer Persona · Doc ROI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      window.__DOCROI_TITLE__ = "Sistema de Perfilado del Buyer Persona";
+      function updateDocRoiBuyerTitle() {
+        document.title = "Sistema de Perfilado del Buyer Persona · Doc ROI";
+        document.querySelectorAll("h1, h2").forEach(function (node) {
+          var text = (node.textContent || "").trim();
+          if (text === "Sistema premium de inteligencia de Buyer Persona" || text === "Generación Perfil Buyer Persona con IA") {
+            node.textContent = window.__DOCROI_TITLE__;
+          }
+        });
+      }
+      window.addEventListener("DOMContentLoaded", function () {
+        updateDocRoiBuyerTitle();
+        setTimeout(updateDocRoiBuyerTitle, 100);
+        setTimeout(updateDocRoiBuyerTitle, 500);
+        setTimeout(updateDocRoiBuyerTitle, 1200);
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
