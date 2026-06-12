@@ -1,0 +1,103 @@
+.feed-note {
+  margin-top: 16px;
+  border: 1px solid #d8ecf8;
+  background: #f6fbfe;
+  border-radius: 16px;
+  padding: 14px;
+  text-align: left;
+}
+
+.feed-note strong {
+  display: block;
+  color: #003b5c;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.feed-note p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.kit-grid.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.kit-grid .secondary-btn {
+  width: 100%;
+  margin-top: 14px;
+  color: #003b5c;
+}
+
+.methodology-section {
+  position: relative;
+}
+
+.method-sticky {
+  position: sticky;
+  top: 88px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border-radius: 999px;
+  padding: 0 18px;
+  background: #eaf6fb;
+  color: #003b5c;
+  font-weight: 900;
+  border: 1px solid #d8ecf8;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .2);
+  margin-bottom: 24px;
+}
+
+.education-frame {
+  text-align: left;
+}
+
+.education-frame .eyebrow {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.education-frame h3 {
+  text-align: center;
+}
+
+.education-frame > p {
+  font-size: 14px;
+}
+
+.empathy-bridge > div {
+  color: #003b5c !important;
+}
+
+.bridge-pain,
+.bridge-gain,
+.bridge-need {
+  color: #e60000 !important;
+}
+
+.final-persona-sheet header img {
+  width: 154px;
+  height: 154px;
+}
+
+.sheet-grid {
+  grid-template-columns: .85fr 1.35fr 1fr;
+}
+
+.sheet-panel p {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 980px) {
+  .kit-grid.three,
+  .sheet-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .method-sticky {
+    position: static;
+  }
+}
