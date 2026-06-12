@@ -24,6 +24,7 @@ export type BuyerPersonaData = {
   mainCondition: string;
   digitalGeneration: string;
   avatar: string;
+  avatarUrl: string;
   needsToSolve: string;
   mainConcern: string;
   desiredGain: string;
@@ -33,11 +34,15 @@ export type BuyerPersonaData = {
   mainBarrier: string;
   trustTrigger: string;
   thinksAndFeels: string;
+  feels: string;
   hears: string;
   sees: string;
   saysAndDoes: string;
+  says: string;
+  does: string;
   frustrations: string;
   motivations: string;
+  centralNeed: string;
   recency: Score;
   frequency: Score;
   monetization: Score;
@@ -47,6 +52,8 @@ export type BuyerPersonaData = {
   confidenceNeed: Score;
   socialProofNeed: Score;
   primaryLevel: string;
+  secondaryLevel: string;
+  strategicInterpretation: string;
   secondaryLevels: string[];
   levelWeights: Record<string, number>;
   pyramidNotes: string;
@@ -66,7 +73,10 @@ export type BuyerPersonaData = {
   intentions: string[];
 };
 
-export type StrategicAlert = { title: string; body: string };
+export type StrategicAlert = {
+  title: string;
+  body: string;
+};
 
 export type TopicCluster = {
   pillar_topic: string;
