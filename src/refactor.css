@@ -7,6 +7,29 @@
   text-align: left;
 }
 
+.field-help {
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 500;
+  margin-top: -2px;
+}
+
+.gen-placeholder {
+  width: 180px;
+  aspect-ratio: 1;
+  border-radius: 18px;
+  border: 1px dashed #b8c6d6;
+  background: #f6f7f9;
+  color: #6b7280;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 18px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
 .feed-note strong {
   display: block;
   color: #003b5c;
