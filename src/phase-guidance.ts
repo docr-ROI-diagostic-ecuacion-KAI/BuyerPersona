@@ -37,8 +37,8 @@ const phaseGuidance: Record<string, PhaseGuidance> = {
     body: "Empatizar no significa imaginar frases bonitas. Significa observar que oye, que ve, que piensa, que siente, que dice y que hace para comprender la decision desde su contexto real.",
     points: [
       "Busca evidencias, no suposiciones comodas.",
-      "Distingue miedo, deseo, objecion y motivacion.",
-      "Conecta la emocion con una decision de negocio.",
+      "Conecta miedo, deseo, objecion y motivacion con una decision de negocio.",
+      "Referencia: GRAY, D. (2017). The Empathy Map Canvas. XPLANE. Disponible en: https://xplane.com.",
     ],
   },
   Compra: {
