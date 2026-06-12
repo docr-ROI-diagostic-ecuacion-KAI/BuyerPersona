@@ -1,5 +1,7 @@
 import { defineConfig } from "vite";
 
+const isGitHubPages = process.env.GITHUB_ACTIONS === "true";
+
 export default defineConfig({
-  base: "/Buyer_Persona/",
+  base: isGitHubPages ? "/Buyer_Persona/" : "/",
 });
