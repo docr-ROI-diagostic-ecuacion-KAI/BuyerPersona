@@ -109,6 +109,97 @@
   color: #fff !important;
 }
 
+.empathy-framing {
+  margin-top: 16px;
+  border: 1px solid #dde5ee;
+  border-radius: 18px;
+  background: #fff;
+  padding: 14px;
+}
+
+.empathy-framing .frame-label {
+  display: block;
+  color: #003b5c;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.empathy-framing h4 {
+  margin: 8px 0 6px;
+  color: #05070b;
+  font-size: 18px;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.empathy-framing > p,
+.frame-objective p {
+  color: #566273;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.empathy-frame-grid {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.empathy-frame-grid article {
+  border: 1px solid #e1e7ef;
+  border-radius: 14px;
+  background: #f6f7f9;
+  padding: 10px;
+}
+
+.empathy-frame-grid strong {
+  display: block;
+  color: #003b5c;
+  font-size: 13px;
+  font-weight: 900;
+  margin-bottom: 7px;
+}
+
+.empathy-frame-grid small {
+  display: block;
+  color: #05070b;
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+.empathy-frame-grid p {
+  color: #566273;
+  font-size: 12px;
+  line-height: 1.35;
+  margin: 2px 0 0;
+}
+
+.frame-objective {
+  margin-top: 12px;
+  border-radius: 14px;
+  background: #05070b;
+  color: #fff;
+  padding: 12px;
+}
+
+.frame-objective strong {
+  display: block;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.frame-objective p {
+  color: #fff;
+  margin: 0;
+}
+
 .final-persona-sheet header img {
   width: 154px;
   height: 154px;
