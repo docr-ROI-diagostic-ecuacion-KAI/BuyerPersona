@@ -12,11 +12,11 @@ const heroBg = "https://docroi.marketing/wp-content/uploads/2026/05/Imagen1.png"
 const steps = ["Bienvenida", "Identidad", "Necesidad", "Mapa de empatía", "Compra", "Evolución relacional"];
 
 const gen: Record<string, [string, string, string, string, string]> = {
-  "Baby Boomer digital": ["Baby Boomers (1946-1964)", "60-78", "/avatars/baby-boomer.svg", "Perfil estable, leal y sensible a la reputación. Decide mejor cuando entiende el beneficio, reduce el riesgo y reconoce una marca confiable.", "Web, Email, Facebook, WhatsApp"],
-  "Generación X digital": ["Generación X (1965-1980)", "44-59", "/avatars/gen-x.svg", "Perfil pragmático y autosuficiente. Necesita pruebas, comparativas, autoridad y sensación de control antes de decidir.", "Web, Email, LinkedIn, YouTube"],
-  Millennial: ["Millennials o Generación Y (1981-1996)", "28-43", "/avatars/millennial.svg", "Perfil exigente con la experiencia. Reacciona bien a transparencia, utilidad inmediata, comunidad y prueba social creíble.", "Web móvil, Instagram, LinkedIn, Email"],
-  "Generación Z": ["Generación Z o Centennials (1997-2012)", "12-27", "/avatars/gen-z.svg", "Perfil visual, veloz y comunitario. El mensaje debe ser breve, demostrable, auténtico y nativo móvil.", "TikTok, Instagram, Twitch, Discord"],
-  "Alpha emergente": ["Generación Alfa (2013-presente)", "0-11", "/avatars/gen-alpha.svg", "Perfil en formación. Requiere seguridad, mediación adulta, aprendizaje visual y experiencia interactiva.", "YouTube Kids, Roblox, Minecraft, asistentes inteligentes"],
+  "Baby Boomer digital": ["Baby Boomers (1946-1964)", "60-78", "https://docroi.marketing/wp-content/uploads/2026/06/Baby-Boomers-1946-–-1964.png", "Perfil estable, leal y sensible a la reputación. Decide mejor cuando entiende el beneficio, reduce el riesgo y reconoce una marca confiable.", "Web, Email, Facebook, WhatsApp"],
+  "Generación X digital": ["Generación X (1965-1980)", "44-59", "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-X-1965-–-1980.png", "Perfil pragmático y autosuficiente. Necesita pruebas, comparativas, autoridad y sensación de control antes de decidir.", "Web, Email, LinkedIn, YouTube"],
+  Millennial: ["Millennials o Generación Y (1981-1996)", "28-43", "https://docroi.marketing/wp-content/uploads/2026/06/Millennials-o-Generacion-Y-1981-–-1996.png", "Perfil exigente con la experiencia. Reacciona bien a transparencia, utilidad inmediata, comunidad y prueba social creíble.", "Web móvil, Instagram, LinkedIn, Email"],
+  "Generación Z": ["Generación Z o Centennials (1997-2012)", "12-27", "https://docroi.marketing/wp-content/uploads/2026/06/Centennials-1997-–-2012.png", "Perfil visual, veloz y comunitario. El mensaje debe ser breve, demostrable, auténtico y nativo móvil.", "TikTok, Instagram, Twitch, Discord"],
+  "Alpha emergente": ["Generación Alfa (2013-presente)", "0-11", "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-Alfa-2013-–-presente.png", "Perfil en formación. Requiere seguridad, mediación adulta, aprendizaje visual y experiencia interactiva.", "YouTube Kids, Roblox, Minecraft, asistentes inteligentes"],
 };
 
 const guides = [
@@ -26,6 +26,17 @@ const guides = [
   ["Mapa de empatía", "Este bloque ayuda a mirar el mundo desde la persona: qué escucha, ve, piensa, siente, dice y hace. Sirve para escribir mensajes más humanos y elegir mejores contenidos."],
   ["Compra", "No estamos calculando finanzas oficiales. Estamos leyendo señales de decisión: urgencia, sensibilidad, confianza, frecuencia, satisfacción, monetización potencial y relación previa."],
   ["Evolución relacional", "Este modelo identifica la motivación profunda. Como Maslow, pero aplicado a marketing: seguridad, confianza, reconocimiento, pertenencia, productividad, crecimiento, control o autorrealización cambian el mensaje y el canal."],
+];
+
+const empathyFraming = [
+  { title: "1 · Qué piensa", classic: ["Qué piensa", "Qué necesita", "Qué le preocupa"], docroi: ["Producto", "Precio", "Caro o barato", "ROI esperado"] },
+  { title: "2 · Qué siente", classic: ["Qué siente", "Qué emociones tiene", "Qué le motiva"], docroi: ["Marca", "Inseguridad", "Satisfacción esperada"] },
+  { title: "3 · Qué ve", classic: ["Qué ve", "Qué le rodea", "Qué influencias observa"], docroi: ["Redes sociales", "Plataformas", "Dónde descubre"] },
+  { title: "4 · Qué escucha", classic: ["Qué escucha", "Quién influye", "Qué mensajes recibe"], docroi: ["Contenidos", "Formatos de confianza", "Expertos o influencers"] },
+  { title: "5 · Qué dice", classic: ["Qué dice", "Cómo expresa opiniones"], docroi: ["Qué recomendaría", "Argumentos", "Mensajes que compartiría"] },
+  { title: "6 · Qué hace", classic: ["Qué hace", "Cómo actúa", "Cómo se comporta"], docroi: ["Dónde compra", "Cómo compara", "Online o físico", "Recorrido antes de decidir"] },
+  { title: "7 · Pains", classic: ["Qué le frustra", "Qué miedo tiene"], docroi: ["Barreras", "Dolor", "Dificultad"] },
+  { title: "8 · Gains", classic: ["Qué quiere conseguir", "Qué considera éxito"], docroi: ["Beneficio esperado", "Mejora deseada"] },
 ];
 
 function top() {
@@ -85,6 +96,31 @@ function Section({ title, intro, children }: { title: string; intro: string; chi
   return <section className="form-section"><div className="section-kicker">Guardado local automático</div><h3>{title}</h3><p>{intro}</p><div className="form-grid">{children}</div></section>;
 }
 
+function EmpathyFraming() {
+  return (
+    <div className="empathy-framing">
+      <span className="frame-label">Documento maestro · DOC ROI</span>
+      <h4>Framing del mapa de empatía</h4>
+      <p>Herramienta simple, visual y pedagógica para entender cómo una persona piensa, siente, decide, consume y se relaciona con productos, contenidos y marcas.</p>
+      <div className="empathy-frame-grid">
+        {empathyFraming.map((item) => (
+          <article key={item.title}>
+            <strong>{item.title}</strong>
+            <small>Mapa clásico</small>
+            <p>{item.classic.join(" · ")}</p>
+            <small>Aportación DOC ROI</small>
+            <p>{item.docroi.join(" · ")}</p>
+          </article>
+        ))}
+      </div>
+      <div className="frame-objective">
+        <strong>Objetivo para el alumno</strong>
+        <p>Pensar mejor el buyer persona, conectar empatía con negocio y preparar contenidos, promociones, pricing y automatización sin convertirlo en consultoría compleja.</p>
+      </div>
+    </div>
+  );
+}
+
 function Feed({ step, data }: { step: number; data: BuyerPersonaData }) {
   const g = gen[data.digitalGeneration];
   return (
@@ -95,6 +131,7 @@ function Feed({ step, data }: { step: number; data: BuyerPersonaData }) {
         <p>{guides[step][1]}</p>
         <div className="feed-note"><strong>Cómo cumplimentarlo</strong><p>Escribe como si se lo explicaras a un compañero: concreto, humano y observable. No busques una frase perfecta; busca una hipótesis útil.</p></div>
         {step === 1 && g && <div className="generation-note"><GenImage src={g[2]} alt={g[0]} /><strong>{g[0]}</strong><p>{executiveGeneration(data.digitalGeneration)}</p><small>{g[4]}</small></div>}
+        {step === 3 && <EmpathyFraming />}
       </div>
     </aside>
   );
@@ -179,7 +216,7 @@ export function AppCorrected() {
     <div className="app-shell">
       <header className="doc-header"><div className="container header-inner"><img src={logo} /><nav><a href="#constructor">Constructor</a></nav></div></header>
       <section className="hero" style={{ backgroundImage: `linear-gradient(90deg,rgba(5,7,11,.96),rgba(0,59,92,.82)),url(${heroBg})` }}>
-        <div className="container hero-grid"><div><span className="eyebrow">Clínica Doc ROI · Buyer Persona con IA</span><h1>Sistema de Perfilado del Buyer Persona</h1><p>Una experiencia de consultoría guiada para formar, diagnosticar y construir un dossier de comportamiento digital, contenido, canalidad, automatización y monetización del dato.</p><div className="hero-actions"><a className="primary-btn" href="#constructor">Iniciar diagnóstico</a></div></div><div className="objective-panel"><h2>Objetivo clínico</h2><p>Construir un perfil comprensible para clase, contenido, canalidad y decisión.</p><dl><div><dt>Nivel</dt><dd>Formativo aplicado</dd></div><div><dt>Herramientas</dt><dd>Ficha, guía e IA</dd></div><div><dt>Resultado</dt><dd>Buyer Persona trabajado con criterio</dd></div></dl></div></div>
+        <div className="container hero-grid"><div><span className="eyebrow">Doc ROI · Buyer Persona con IA</span><h1>Generación Perfil Buyer Persona con IA</h1><p>Una experiencia guiada y formativa para construir, paso a paso, una ficha de Buyer Persona clara, humana, visual y accionable.</p><div className="hero-actions"><a className="primary-btn" href="#constructor">Iniciar diagnóstico</a></div></div><div className="objective-panel"><h2>Objetivo clínico</h2><p>Construir un perfil comprensible para clase, contenido, canalidad y decisión.</p><dl><div><dt>Nivel</dt><dd>Formativo aplicado</dd></div><div><dt>Herramientas</dt><dd>Ficha, guía e IA</dd></div><div><dt>Resultado</dt><dd>Buyer Persona trabajado con criterio</dd></div></dl></div></div>
       </section>
       <main><section className="builder container" id="constructor"><div className="builder-head"><span className="eyebrow">Constructor guiado</span><h2>{steps[step]}</h2><p>La aplicación enseña mientras construyes: pregunta, ayuda, respuesta y feedback formativo.</p></div><div className="progress-wrap"><div className="progress-meta"><span>Paso {step + 1} de {steps.length}</span><strong>{Math.round(((step + 1) / steps.length) * 100)}%</strong></div><div className="progress-track"><div style={{ width: `${((step + 1) / steps.length) * 100}%` }} /></div></div><div className="builder-grid"><aside className="step-list">{steps.map((item, index) => <button className={index === step ? "active" : ""} key={item} onClick={() => nav(index)}><span>{index + 1}</span>{item}</button>)}</aside><main className="wizard-card"><Step step={step} data={data} update={update} patch={patch} /><div className="wizard-actions"><button className="secondary-btn" onClick={() => nav(step - 1)} disabled={step === 0}><ArrowLeft size={18} />Anterior</button><button className="secondary-btn" onClick={reset}><RotateCcw size={18} />Reiniciar</button><button className="primary-btn small" onClick={() => nav(step + 1)} disabled={step === steps.length - 1}>Siguiente<ArrowRight size={18} /></button></div></main><Feed step={step} data={data} /></div></section></main>
       <Footer />
