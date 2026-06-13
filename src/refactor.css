@@ -91,82 +91,6 @@
   font-size: 14px;
 }
 
-.field > span:has(.docroi-info) {
-  justify-content: flex-start !important;
-  align-items: center !important;
-  gap: 7px;
-}
-
-.slider > span:has(.docroi-info) {
-  align-items: center !important;
-  gap: 7px;
-}
-
-.docroi-info {
-  width: 20px !important;
-  height: 20px !important;
-  min-width: 20px !important;
-  min-height: 20px !important;
-  margin-left: 0 !important;
-  border: 1px solid #d8ecf8 !important;
-  background: linear-gradient(180deg, #f6fbfe, #d8ecf8) !important;
-  color: #003b5c !important;
-  box-shadow: 0 6px 14px rgba(0, 59, 92, .10) !important;
-  font-size: 11px !important;
-  font-weight: 900 !important;
-  line-height: 20px !important;
-  text-align: center !important;
-  padding: 0 !important;
-  vertical-align: middle !important;
-}
-
-.docroi-info::before {
-  content: "?" !important;
-  display: block;
-  width: 100%;
-  height: 100%;
-  line-height: 18px;
-  text-align: center;
-  transform: none !important;
-}
-
-.docroi-info:hover,
-.docroi-info:focus {
-  background: #003b5c !important;
-  border-color: #003b5c !important;
-  color: #fff !important;
-  outline: none;
-}
-
-.docroi-info::after {
-  border-color: rgba(216, 236, 248, .28) !important;
-  background: rgba(5, 7, 11, .92) !important;
-  color: #fff !important;
-}
-
-.objective-panel dl {
-  gap: 0;
-}
-
-.objective-panel dl > div {
-  display: grid !important;
-  grid-template-columns: 154px minmax(0, 1fr) !important;
-  column-gap: 20px !important;
-  align-items: start;
-}
-
-.objective-panel dt {
-  white-space: nowrap;
-  min-width: 0;
-}
-
-.objective-panel dd {
-  min-width: 0;
-  overflow-wrap: normal;
-  word-break: normal;
-  line-height: 1.35;
-}
-
 .empathy-bridge > div {
   color: #003b5c !important;
 }
@@ -175,6 +99,14 @@
 .bridge-gain,
 .bridge-need {
   color: #e60000 !important;
+}
+
+.dark-card .persona-card,
+.dark-card .persona-card h3,
+.dark-card .persona-card p,
+.dark-card .persona-card span,
+.dark-card .persona-card strong {
+  color: #fff !important;
 }
 
 .final-persona-sheet header img {
@@ -198,12 +130,5 @@
 
   .method-sticky {
     position: static;
-  }
-}
-
-@media (max-width: 560px) {
-  .objective-panel dl > div {
-    grid-template-columns: 1fr !important;
-    row-gap: 6px;
   }
 }
