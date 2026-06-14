@@ -10,6 +10,8 @@ const generationImages: Record<string, string> = {
   "Alpha emergente": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-Alfa-2013-–-presente.png",
 };
 
+let scheduled = false;
+
 function installEmpathyLayoutStyles() {
   if (document.getElementById(empathyLayoutStyleId)) return;
   const style = document.createElement("style");
@@ -112,10 +114,14 @@ function generationChannels(data: any) {
   return generationProfile || data.media?.join?.(", ") || "Canales y contexto digital pendientes";
 }
 
-function headerHtml(data: any) {
+function headerSignature(data: any) {
+  return [data.fictionalName || "", data.digitalGeneration || "", generationImage(data), generationChannels(data)].join("|");
+}
+
+function headerHtml(data: any, signature: string) {
   const name = data.fictionalName || data.digitalGeneration || "Buyer Persona";
   return `
-    <div class="docroi-empathy-profile-head" data-docroi-empathy-profile="1">
+    <div class="docroi-empathy-profile-head" data-docroi-empathy-profile="1" data-signature="${signature}">
       <img src="${generationImage(data)}" alt="${name}">
       <div>
         <span>Cliente / Buyer Persona</span>
@@ -132,9 +138,11 @@ function cleanEmpathyFigures() {
 }
 
 function movePersonaContextToMainPanel() {
+  scheduled = false;
   installEmpathyLayoutStyles();
+
   if (!empathyStepIsActive()) {
-    document.querySelectorAll('[data-docroi-empathy-profile="1"]').forEach((node) => node.remove());
+    document.querySelectorAll('[data-docroi-empathy-profile="1"], .docroi-empathy-map-visual').forEach((node) => node.remove());
     return;
   }
 
@@ -143,30 +151,31 @@ function movePersonaContextToMainPanel() {
   const formGrid = document.querySelector<HTMLElement>(".wizard-card .form-section .form-grid");
   if (!formGrid) return;
 
-  const existing = document.querySelector<HTMLElement>('[data-docroi-empathy-profile="1"]');
   const data = personaData();
-  if (existing) {
-    existing.outerHTML = headerHtml(data);
-  } else {
-    formGrid.insertAdjacentHTML("afterbegin", headerHtml(data));
-  }
+  const signature = headerSignature(data);
+  const existing = document.querySelector<HTMLElement>('[data-docroi-empathy-profile="1"]');
 
-  document.querySelectorAll<HTMLElement>(".summary-panel .empathy-framing .empathy-persona").forEach((node) => node.remove());
-  document.querySelectorAll<HTMLElement>(".summary-panel .docroi-empathy-map-visual").forEach((node) => node.remove());
+  if (existing?.dataset.signature === signature) return;
+  if (existing) existing.remove();
+
+  formGrid.insertAdjacentHTML("afterbegin", headerHtml(data, signature));
+
+  document.querySelectorAll<HTMLElement>(".summary-panel .empathy-framing .empathy-persona, .summary-panel .docroi-empathy-map-visual").forEach((node) => node.remove());
 }
 
 function scheduleEmpathyLayoutFix() {
-  movePersonaContextToMainPanel();
-  window.setTimeout(movePersonaContextToMainPanel, 80);
-  window.setTimeout(movePersonaContextToMainPanel, 250);
-  window.setTimeout(movePersonaContextToMainPanel, 700);
+  if (scheduled) return;
+  scheduled = true;
+  window.requestAnimationFrame(movePersonaContextToMainPanel);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
   scheduleEmpathyLayoutFix();
+  window.setTimeout(scheduleEmpathyLayoutFix, 120);
+  window.setTimeout(scheduleEmpathyLayoutFix, 500);
   const root = document.getElementById("root");
   if (root) {
-    new MutationObserver(() => window.requestAnimationFrame(scheduleEmpathyLayoutFix)).observe(root, {
+    new MutationObserver(scheduleEmpathyLayoutFix).observe(root, {
       childList: true,
       subtree: true,
       characterData: true,
