@@ -3,11 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Generación Perfil Buyer Persona con IA · Doc ROI</title>
+    <title>Generacion Perfil Buyer Persona con IA · Doc ROI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+      .empathy-framing { color: #101820; }
+      .empathy-framing * { box-sizing: border-box; }
+      .empathy-framing .frame-label {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        margin-bottom: 8px;
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: #eef4f7;
+        color: #111827;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: .02em;
+        text-transform: uppercase;
+      }
+      .empathy-framing h4 {
+        margin: 0 0 8px;
+        color: #05070b;
+        font-size: 20px;
+        line-height: 1.08;
+        font-weight: 950;
+        letter-spacing: 0;
+      }
+      .empathy-framing > p {
+        margin: 0 0 12px;
+        color: #334155;
+        font-size: 12px;
+        line-height: 1.45;
+      }
       .empathy-framing .empathy-persona {
         display: grid;
         grid-template-columns: 76px 1fr;
@@ -29,9 +59,7 @@
       }
       .empathy-framing .empathy-persona strong,
       .empathy-framing .empathy-persona p,
-      .empathy-framing .empathy-persona small {
-        color: #fff !important;
-      }
+      .empathy-framing .empathy-persona small { color: #fff !important; }
       .empathy-framing .empathy-persona strong {
         display: block;
         font-size: 13px;
@@ -50,6 +78,73 @@
         font-weight: 800;
         opacity: .82;
       }
+      .empathy-framing .empathy-frame-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .empathy-framing article {
+        border: 1px solid #dce7ef;
+        border-radius: 14px;
+        background: #fff;
+        padding: 12px;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, .05);
+      }
+      .empathy-framing article > strong {
+        display: block;
+        color: #05070b;
+        font-size: 14px;
+        line-height: 1.2;
+        font-weight: 950;
+        margin-bottom: 9px;
+      }
+      .empathy-framing .logic-block {
+        padding: 9px;
+        border-radius: 11px;
+        background: #f7fafc;
+        border: 1px solid #e8eef5;
+      }
+      .empathy-framing .logic-block + .logic-block { margin-top: 8px; }
+      .empathy-framing .logic-block.docroi { background: #fffaf0; border-color: #f4dfb7; }
+      .empathy-framing .logic-block small {
+        display: block;
+        margin-bottom: 6px;
+        color: #111827;
+        font-size: 10px;
+        line-height: 1.2;
+        font-weight: 950;
+        text-transform: uppercase;
+        letter-spacing: .03em;
+      }
+      .empathy-framing ul {
+        margin: 0;
+        padding-left: 16px;
+        color: #263241;
+        font-size: 11.5px;
+        line-height: 1.38;
+      }
+      .empathy-framing li + li { margin-top: 3px; }
+      .empathy-framing .frame-objective {
+        margin-top: 12px;
+        border-radius: 15px;
+        background: #05070b;
+        color: #fff;
+        padding: 13px;
+      }
+      .empathy-framing .frame-objective strong,
+      .empathy-framing .frame-objective p { color: #fff !important; }
+      .empathy-framing .frame-objective strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 13px;
+        font-weight: 950;
+      }
+      .empathy-framing .frame-objective p {
+        margin: 0;
+        font-size: 11.5px;
+        line-height: 1.42;
+      }
     </style>
   </head>
   <body>
@@ -59,21 +154,24 @@
         "Baby Boomer digital": "https://docroi.marketing/wp-content/uploads/2026/06/Baby-Boomers-1946-–-1964.png",
         "Baby Boomers": "https://docroi.marketing/wp-content/uploads/2026/06/Baby-Boomers-1946-–-1964.png",
         "Generación X digital": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-X-1965-–-1980.png",
+        "Generacion X digital": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-X-1965-–-1980.png",
         "Generación X": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-X-1965-–-1980.png",
         "Millennial": "https://docroi.marketing/wp-content/uploads/2026/06/Millennials-o-Generacion-Y-1981-–-1996.png",
         "Millennials": "https://docroi.marketing/wp-content/uploads/2026/06/Millennials-o-Generacion-Y-1981-–-1996.png",
         "Generación Z": "https://docroi.marketing/wp-content/uploads/2026/06/Centennials-1997-–-2012.png",
+        "Generacion Z": "https://docroi.marketing/wp-content/uploads/2026/06/Centennials-1997-–-2012.png",
         "Centennials": "https://docroi.marketing/wp-content/uploads/2026/06/Centennials-1997-–-2012.png",
         "Alpha emergente": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-Alfa-2013-–-presente.png",
-        "Generación Alfa": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-Alfa-2013-–-presente.png"
+        "Generación Alfa": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-Alfa-2013-–-presente.png",
+        "Generacion Alfa": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-Alfa-2013-–-presente.png"
       };
 
       function docroiSetTitle() {
-        document.title = "Generación Perfil Buyer Persona con IA · Doc ROI";
+        document.title = "Generacion Perfil Buyer Persona con IA · Doc ROI";
         document.querySelectorAll("h1").forEach(function (node) {
           var text = (node.textContent || "").trim();
           if (text === "Sistema premium de inteligencia de Buyer Persona" || text === "Sistema de Perfilado del Buyer Persona") {
-            node.textContent = "Generación Perfil Buyer Persona con IA";
+            node.textContent = "Generacion Perfil Buyer Persona con IA";
           }
         });
       }
@@ -103,24 +201,60 @@
         return profile ? profile.textContent || "" : "Millennial";
       }
 
+      function docroiList(items) {
+        return "<ul>" + items.map(function (item) { return "<li>" + item + "</li>"; }).join("") + "</ul>";
+      }
+
       function docroiEmpathyFrameHtml() {
         var generationText = docroiCurrentGenerationText();
         var image = docroiGenerationImageFor(generationText);
         var name = (document.querySelector('.generation-profile h4') || {}).textContent || generationText || "Buyer Persona";
         var channels = (document.querySelector('.generation-profile small') || {}).textContent || "Canales y contexto digital pendientes";
         var items = [
-          ["1 · Qué piensa", "Qué piensa · Qué necesita · Qué le preocupa", "Producto · Precio · Caro o barato · ROI esperado"],
-          ["2 · Qué siente", "Qué siente · Qué emociones tiene · Qué le motiva", "Marca · Inseguridad · Satisfacción esperada"],
-          ["3 · Qué ve", "Qué ve · Qué le rodea · Qué influencias observa", "Redes sociales · Plataformas · Dónde descubre"],
-          ["4 · Qué escucha", "Qué escucha · Quién influye · Qué mensajes recibe", "Contenidos · Formatos de confianza · Expertos o influencers"],
-          ["5 · Qué dice", "Qué dice · Cómo expresa opiniones", "Qué recomendaría · Argumentos · Mensajes que compartiría"],
-          ["6 · Qué hace", "Qué hace · Cómo actúa · Cómo se comporta", "Dónde compra · Cómo compara · Online o físico · Recorrido antes de decidir"],
-          ["7 · Pains", "Qué le frustra · Qué miedo tiene", "Barreras · Dolor · Dificultad"],
-          ["8 · Gains", "Qué quiere conseguir · Qué considera éxito", "Beneficio esperado · Mejora deseada"]
+          {
+            title: "1 · Qué piensa",
+            classic: ["¿Qué piensa?", "¿Qué necesita?", "¿Qué le preocupa?"],
+            docroi: ["¿Qué piensa sobre el producto?", "¿Qué piensa sobre el precio?", "¿Qué considera caro o barato?", "¿Qué ROI espera?"]
+          },
+          {
+            title: "2 · Qué siente",
+            classic: ["¿Qué siente?", "¿Qué emociones tiene?", "¿Qué le motiva?"],
+            docroi: ["¿Qué siente sobre el producto?", "¿Qué sensación le transmite la marca?", "¿Qué inseguridad tiene?", "¿Qué satisfacción espera?"]
+          },
+          {
+            title: "3 · Qué ve",
+            classic: ["¿Qué ve?", "¿Qué le rodea?", "¿Qué influencias observa?"],
+            docroi: ["Relacionarlo con canales.", "¿Qué redes sociales utiliza?", "¿Qué plataformas consulta?", "¿Dónde descubre productos o servicios?"]
+          },
+          {
+            title: "4 · Qué escucha",
+            classic: ["¿Qué escucha?", "¿Quién influye en él?", "¿Qué mensajes recibe?"],
+            docroi: ["Relacionarlo con contenido.", "¿Qué contenidos consume?", "¿Qué formatos le generan confianza?", "¿Qué influencers o expertos sigue?"]
+          },
+          {
+            title: "5 · Qué dice",
+            classic: ["¿Qué dice?", "¿Cómo expresa sus opiniones?"],
+            docroi: ["Relacionarlo con promoción.", "¿Qué recomendaría?", "¿Qué argumentos utiliza?", "¿Qué mensajes compartiría?"]
+          },
+          {
+            title: "6 · Qué hace",
+            classic: ["¿Qué hace?", "¿Cómo actúa?", "¿Cómo se comporta?"],
+            docroi: ["Relacionarlo con distribución.", "¿Dónde compra?", "¿Cómo compara?", "¿Compra online o físico?", "¿Qué recorrido hace antes de decidir?"]
+          },
+          {
+            title: "7 · Pains",
+            classic: ["Adaptación DOC ROI: renombrar esfuerzos como pains."],
+            docroi: ["¿Qué le frustra?", "¿Qué miedo tiene?", "¿Qué barreras encuentra?", "¿Qué le genera dolor o dificultad?"]
+          },
+          {
+            title: "8 · Gains",
+            classic: ["Adaptación DOC ROI: renombrar resultados como gains."],
+            docroi: ["¿Qué quiere conseguir?", "¿Qué considera éxito?", "¿Qué beneficio espera?", "¿Qué mejora desea obtener?"]
+          }
         ];
-        return '<div class="empathy-framing" data-docroi-frame="empathy"><span class="frame-label">Documento maestro · DOC ROI</span><h4>Framing del mapa de empatía</h4><p>El mapa de empatía sirve para observar a una persona antes de venderle nada: cómo piensa, cómo siente, cómo decide, cómo consume y cómo se relaciona con productos, contenidos y marcas.</p><div class="empathy-persona"><img src="' + image + '" alt="' + name + '"><div><strong>' + name + '</strong><p>Usa este rostro como ancla visual del perfil. No rellenes campos sueltos: construye una hipótesis humana que conecte conducta, necesidad y negocio.</p><small>' + channels + '</small></div></div><div class="empathy-frame-grid">' + items.map(function (item) {
-          return '<article><strong>' + item[0] + '</strong><small>Mapa clásico</small><p>' + item[1] + '</p><small>Aportación DOC ROI</small><p>' + item[2] + '</p></article>';
-        }).join('') + '</div><div class="frame-objective"><strong>Objetivo para el alumno</strong><p>Pensar mejor el buyer persona, entender comportamiento, conectar empatía con negocio y preparar contenidos, promociones, pricing y automatización sin convertir esta sección en consultoría compleja.</p></div></div>';
+        return '<div class="empathy-framing" data-docroi-frame="empathy"><span class="frame-label">Documento maestro · DOC ROI</span><h4>Framing del mapa de empatía</h4><p>Herramienta simple, visual y pedagógica para ayudar al alumno a entender cómo piensa una persona, cómo siente, cómo decide, cómo consume y cómo se relaciona con productos, contenidos y marcas.</p><div class="empathy-persona"><img src="' + image + '" alt="' + name + '"><div><strong>' + name + '</strong><p>Usa el rostro como ancla visual del perfil. La clave no es rellenar campos sueltos, sino construir una hipótesis humana conectada con conducta, necesidad y negocio.</p><small>' + channels + '</small></div></div><div class="empathy-frame-grid">' + items.map(function (item) {
+          return '<article><strong>' + item.title + '</strong><div class="logic-block"><small>Mapa de empatía clásico</small>' + docroiList(item.classic) + '</div><div class="logic-block docroi"><small>Aportación DOC ROI</small>' + docroiList(item.docroi) + '</div></article>';
+        }).join('') + '</div><div class="frame-objective"><strong>Objetivo para el alumno</strong><p>Pensar mejor su buyer persona, entender comportamiento, conectar empatía con negocio y preparar posteriormente contenidos, promociones, pricing y automatización, sin convertir esta sección en una consultoría compleja.</p></div></div>';
       }
 
       function docroiEnhanceEmpathyFeed() {
@@ -129,15 +263,20 @@
         document.querySelectorAll('[data-docroi-frame="empathy"]').forEach(function (node) {
           if (!isEmpathy) node.remove();
         });
-        if (!isEmpathy || document.querySelector('[data-docroi-frame="empathy"]')) return;
+        if (!isEmpathy) return;
         var frame = document.querySelector(".summary-panel .education-frame");
         if (!frame) return;
-        frame.insertAdjacentHTML("beforeend", docroiEmpathyFrameHtml());
+        if (!document.querySelector('[data-docroi-frame="empathy"]')) {
+          frame.innerHTML = docroiEmpathyFrameHtml();
+        }
       }
 
       function docroiRenameSlider(label, from, to) {
-        var textNode = Array.from(label.querySelector("span").childNodes).find(function (node) { return node.nodeType === 3 && node.textContent.indexOf(from) !== -1; });
-        if (textNode) textNode.textContent = textNode.textContent.replace(from, to);
+        var span = label.querySelector("span");
+        if (!span) return;
+        Array.from(span.childNodes).forEach(function (node) {
+          if (node.nodeType === 3 && node.textContent.indexOf(from) !== -1) node.textContent = node.textContent.replace(from, to);
+        });
       }
 
       function docroiEnhancePurchase() {
@@ -169,22 +308,14 @@
             "Relación previa": "Último contacto, experiencia o vínculo con una solución parecida. Indica si hay que educar desde cero o continuar una conversación."
           };
           help.querySelectorAll("article").forEach(function (article) {
-            var title = (article.querySelector("strong") || {}).textContent || "";
+            var titleNode = article.querySelector("strong");
+            var bodyNode = article.querySelector("p");
+            var title = (titleNode || {}).textContent || "";
             if (title === "Prueba social") article.remove();
-            if (title === "Sensibilidad") title = "Sensibilidad";
-            if (title === "Satisfacción") {
-              article.querySelector("strong").textContent = "Satisfacción esperada";
-              title = "Satisfacción esperada";
-            }
-            if (title === "Monetización") {
-              article.querySelector("strong").textContent = "Monetización potencial";
-              title = "Monetización potencial";
-            }
-            if (title === "Relación") {
-              article.querySelector("strong").textContent = "Relación previa";
-              title = "Relación previa";
-            }
-            if (copy[title]) article.querySelector("p").textContent = copy[title];
+            if (title === "Satisfacción" && titleNode) { titleNode.textContent = "Satisfacción esperada"; title = "Satisfacción esperada"; }
+            if (title === "Monetización" && titleNode) { titleNode.textContent = "Monetización potencial"; title = "Monetización potencial"; }
+            if (title === "Relación" && titleNode) { titleNode.textContent = "Relación previa"; title = "Relación previa"; }
+            if (copy[title] && bodyNode) bodyNode.textContent = copy[title];
           });
         }
       }
