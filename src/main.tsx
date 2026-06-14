@@ -5,6 +5,7 @@ import "./styles.css";
 import "./phase-guidance";
 import "./empathy-map-replacement";
 import "./navigation-hygiene";
+import "./relationship-transition-guard";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
