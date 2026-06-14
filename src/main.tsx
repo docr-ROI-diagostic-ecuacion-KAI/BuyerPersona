@@ -10,6 +10,7 @@ import "./content-step-order";
 import "./product-perception";
 import "./relationship-maturity";
 import "./marketing-mix-enhancement";
+import "./topic-clusters-enhancement";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
