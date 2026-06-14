@@ -17,6 +17,10 @@ function installEmpathyLayoutStyles() {
   const style = document.createElement("style");
   style.id = empathyLayoutStyleId;
   style.textContent = `
+    .wizard-card .empathy-bridge,
+    .docroi-empathy-map-visual {
+      display: none !important;
+    }
     .docroi-empathy-profile-head {
       display: grid;
       grid-template-columns: 132px minmax(0, 1fr);
@@ -133,10 +137,6 @@ function headerHtml(data: any, signature: string) {
   `;
 }
 
-function cleanEmpathyFigures() {
-  document.querySelectorAll(".docroi-empathy-map-visual, .empathy-bridge").forEach((node) => node.remove());
-}
-
 function movePersonaContextToMainPanel() {
   scheduled = false;
   installEmpathyLayoutStyles();
@@ -146,7 +146,7 @@ function movePersonaContextToMainPanel() {
     return;
   }
 
-  cleanEmpathyFigures();
+  document.querySelectorAll(".docroi-empathy-map-visual").forEach((node) => node.remove());
 
   const formGrid = document.querySelector<HTMLElement>(".wizard-card .form-section .form-grid");
   if (!formGrid) return;
@@ -178,7 +178,6 @@ window.addEventListener("DOMContentLoaded", () => {
     new MutationObserver(scheduleEmpathyLayoutFix).observe(root, {
       childList: true,
       subtree: true,
-      characterData: true,
     });
   }
 });
