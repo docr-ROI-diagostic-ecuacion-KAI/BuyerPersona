@@ -7,16 +7,64 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+      .empathy-framing .empathy-persona {
+        display: grid;
+        grid-template-columns: 76px 1fr;
+        gap: 12px;
+        align-items: center;
+        margin: 12px 0;
+        border: 1px solid #e1e7ef;
+        border-radius: 16px;
+        background: #05070b;
+        padding: 10px;
+        color: #fff;
+      }
+      .empathy-framing .empathy-persona img {
+        width: 76px;
+        height: 76px;
+        object-fit: cover;
+        border-radius: 14px;
+        display: block;
+      }
+      .empathy-framing .empathy-persona strong,
+      .empathy-framing .empathy-persona p,
+      .empathy-framing .empathy-persona small {
+        color: #fff !important;
+      }
+      .empathy-framing .empathy-persona strong {
+        display: block;
+        font-size: 13px;
+        font-weight: 900;
+        margin-bottom: 3px;
+      }
+      .empathy-framing .empathy-persona p {
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.35;
+      }
+      .empathy-framing .empathy-persona small {
+        display: block;
+        margin-top: 5px;
+        font-size: 10px;
+        font-weight: 800;
+        opacity: .82;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
     <script>
       window.__DOCROI_GENERATION_IMAGES__ = {
+        "Baby Boomer digital": "https://docroi.marketing/wp-content/uploads/2026/06/Baby-Boomers-1946-–-1964.png",
         "Baby Boomers": "https://docroi.marketing/wp-content/uploads/2026/06/Baby-Boomers-1946-–-1964.png",
+        "Generación X digital": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-X-1965-–-1980.png",
         "Generación X": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-X-1965-–-1980.png",
+        "Millennial": "https://docroi.marketing/wp-content/uploads/2026/06/Millennials-o-Generacion-Y-1981-–-1996.png",
         "Millennials": "https://docroi.marketing/wp-content/uploads/2026/06/Millennials-o-Generacion-Y-1981-–-1996.png",
         "Generación Z": "https://docroi.marketing/wp-content/uploads/2026/06/Centennials-1997-–-2012.png",
         "Centennials": "https://docroi.marketing/wp-content/uploads/2026/06/Centennials-1997-–-2012.png",
+        "Alpha emergente": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-Alfa-2013-–-presente.png",
         "Generación Alfa": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-Alfa-2013-–-presente.png"
       };
 
@@ -30,23 +78,36 @@
         });
       }
 
-      function docroiGenerationImageFor(text) {
+      function docroiGenerationKey(text) {
         var map = window.__DOCROI_GENERATION_IMAGES__;
-        return Object.keys(map).find(function (key) { return text.indexOf(key) !== -1; });
+        return Object.keys(map).find(function (key) { return (text || "").indexOf(key) !== -1; }) || "Millennial";
+      }
+
+      function docroiGenerationImageFor(text) {
+        return window.__DOCROI_GENERATION_IMAGES__[docroiGenerationKey(text)];
       }
 
       function docroiFixGenerationImages() {
         document.querySelectorAll(".generation-profile, .generation-note, .final-persona-sheet header").forEach(function (box) {
           var img = box.querySelector("img");
           if (!img) return;
-          var key = docroiGenerationImageFor(box.textContent || "");
-          if (key && img.src !== window.__DOCROI_GENERATION_IMAGES__[key]) {
-            img.src = window.__DOCROI_GENERATION_IMAGES__[key];
-          }
+          var src = docroiGenerationImageFor(box.textContent || "");
+          if (src && img.src !== src) img.src = src;
         });
       }
 
+      function docroiCurrentGenerationText() {
+        var selected = document.querySelector("select");
+        if (selected && selected.value && window.__DOCROI_GENERATION_IMAGES__[selected.value]) return selected.value;
+        var profile = document.querySelector(".generation-profile, .generation-note");
+        return profile ? profile.textContent || "" : "Millennial";
+      }
+
       function docroiEmpathyFrameHtml() {
+        var generationText = docroiCurrentGenerationText();
+        var image = docroiGenerationImageFor(generationText);
+        var name = (document.querySelector('.generation-profile h4') || {}).textContent || generationText || "Buyer Persona";
+        var channels = (document.querySelector('.generation-profile small') || {}).textContent || "Canales y contexto digital pendientes";
         var items = [
           ["1 · Qué piensa", "Qué piensa · Qué necesita · Qué le preocupa", "Producto · Precio · Caro o barato · ROI esperado"],
           ["2 · Qué siente", "Qué siente · Qué emociones tiene · Qué le motiva", "Marca · Inseguridad · Satisfacción esperada"],
@@ -57,9 +118,9 @@
           ["7 · Pains", "Qué le frustra · Qué miedo tiene", "Barreras · Dolor · Dificultad"],
           ["8 · Gains", "Qué quiere conseguir · Qué considera éxito", "Beneficio esperado · Mejora deseada"]
         ];
-        return '<div class="empathy-framing" data-docroi-frame="empathy"><span class="frame-label">Documento maestro · DOC ROI</span><h4>Framing del mapa de empatía</h4><p>Herramienta simple, visual y pedagógica para entender cómo una persona piensa, siente, decide, consume y se relaciona con productos, contenidos y marcas.</p><div class="empathy-frame-grid">' + items.map(function (item) {
+        return '<div class="empathy-framing" data-docroi-frame="empathy"><span class="frame-label">Documento maestro · DOC ROI</span><h4>Framing del mapa de empatía</h4><p>El mapa de empatía sirve para observar a una persona antes de venderle nada: cómo piensa, cómo siente, cómo decide, cómo consume y cómo se relaciona con productos, contenidos y marcas.</p><div class="empathy-persona"><img src="' + image + '" alt="' + name + '"><div><strong>' + name + '</strong><p>Usa este rostro como ancla visual del perfil. No rellenes campos sueltos: construye una hipótesis humana que conecte conducta, necesidad y negocio.</p><small>' + channels + '</small></div></div><div class="empathy-frame-grid">' + items.map(function (item) {
           return '<article><strong>' + item[0] + '</strong><small>Mapa clásico</small><p>' + item[1] + '</p><small>Aportación DOC ROI</small><p>' + item[2] + '</p></article>';
-        }).join('') + '</div><div class="frame-objective"><strong>Objetivo para el alumno</strong><p>Pensar mejor el buyer persona, conectar empatía con negocio y preparar contenidos, promociones, pricing y automatización sin convertirlo en consultoría compleja.</p></div></div>';
+        }).join('') + '</div><div class="frame-objective"><strong>Objetivo para el alumno</strong><p>Pensar mejor el buyer persona, entender comportamiento, conectar empatía con negocio y preparar contenidos, promociones, pricing y automatización sin convertir esta sección en consultoría compleja.</p></div></div>';
       }
 
       function docroiEnhanceEmpathyFeed() {
@@ -74,10 +135,65 @@
         frame.insertAdjacentHTML("beforeend", docroiEmpathyFrameHtml());
       }
 
+      function docroiRenameSlider(label, from, to) {
+        var textNode = Array.from(label.querySelector("span").childNodes).find(function (node) { return node.nodeType === 3 && node.textContent.indexOf(from) !== -1; });
+        if (textNode) textNode.textContent = textNode.textContent.replace(from, to);
+      }
+
+      function docroiEnhancePurchase() {
+        var step = (document.querySelector(".builder-head h2") || {}).textContent || "";
+        if (!/compra/i.test(step)) return;
+        var section = document.querySelector(".wizard-card .form-section");
+        if (!section) return;
+        var intro = section.querySelector(":scope > p");
+        if (intro) intro.textContent = "Primero marca las señales principales. Después, debajo, encontrarás la explicación pedagógica de cada variable.";
+        var grid = section.querySelector(".form-grid.two");
+        var help = section.querySelector(".variable-help");
+        if (grid && help && grid.nextElementSibling !== help) grid.insertAdjacentElement("afterend", help);
+        section.querySelectorAll("label.slider").forEach(function (label) {
+          var raw = (label.querySelector("span") || {}).textContent || "";
+          if (raw.indexOf("Prueba social") !== -1) label.remove();
+          if (raw.indexOf("Sensibilidad precio") !== -1) docroiRenameSlider(label, "Sensibilidad precio", "Sensibilidad");
+          if (raw.indexOf("Satisfacción") !== -1 && raw.indexOf("Satisfacción esperada") === -1) docroiRenameSlider(label, "Satisfacción", "Satisfacción esperada");
+          if (raw.indexOf("Monetización") !== -1 && raw.indexOf("Monetización potencial") === -1) docroiRenameSlider(label, "Monetización", "Monetización potencial");
+          if (raw.indexOf("Relación reciente") !== -1) docroiRenameSlider(label, "Relación reciente", "Relación previa");
+        });
+        if (help) {
+          var copy = {
+            "Urgencia": "Nivel de rapidez con el que necesita resolver el problema. Si duele hoy, el mensaje debe ser directo y fácil de comprobar.",
+            "Sensibilidad": "Peso del precio, del riesgo o del esfuerzo en la decisión. Si es alta, explica valor, garantías y coste de no actuar.",
+            "Confianza": "Prueba o validación que necesita antes de comprar: casos, testimonios, autoridad, demo o recomendación.",
+            "Frecuencia": "Cada cuánto consume, compra, evalúa o necesita este tipo de solución.",
+            "Satisfacción esperada": "Experiencia mínima para sentir que ha valido la pena: claridad, rapidez, resultado, acompañamiento o autonomía.",
+            "Monetización potencial": "Capacidad del perfil para generar ingresos, recurrencia, recomendación o valor futuro.",
+            "Relación previa": "Último contacto, experiencia o vínculo con una solución parecida. Indica si hay que educar desde cero o continuar una conversación."
+          };
+          help.querySelectorAll("article").forEach(function (article) {
+            var title = (article.querySelector("strong") || {}).textContent || "";
+            if (title === "Prueba social") article.remove();
+            if (title === "Sensibilidad") title = "Sensibilidad";
+            if (title === "Satisfacción") {
+              article.querySelector("strong").textContent = "Satisfacción esperada";
+              title = "Satisfacción esperada";
+            }
+            if (title === "Monetización") {
+              article.querySelector("strong").textContent = "Monetización potencial";
+              title = "Monetización potencial";
+            }
+            if (title === "Relación") {
+              article.querySelector("strong").textContent = "Relación previa";
+              title = "Relación previa";
+            }
+            if (copy[title]) article.querySelector("p").textContent = copy[title];
+          });
+        }
+      }
+
       function docroiEnhanceBuyerPersona() {
         docroiSetTitle();
         docroiFixGenerationImages();
         docroiEnhanceEmpathyFeed();
+        docroiEnhancePurchase();
       }
 
       window.addEventListener("DOMContentLoaded", function () {
