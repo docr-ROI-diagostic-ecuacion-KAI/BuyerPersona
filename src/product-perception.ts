@@ -50,6 +50,8 @@ const supportCards = [
   ["Tónico reconstituyente", "Deseo y experiencia. El contenido debe activar ilusión, identidad, recompensa, aspiración y disfrute."],
 ];
 
+let scheduled = false;
+
 function storeApi() {
   return (window as any).__docroiPersonaStore;
 }
@@ -65,16 +67,14 @@ function normalizeProductType(value: string) {
 }
 
 function currentProductType() {
-  const current = normalizeProductType(storeApi()?.getState?.().data?.productClassification || "Vitamina");
-  if (current !== storeApi()?.getState?.().data?.productClassification) {
-    storeApi()?.getState?.().update("productClassification", current);
-  }
+  const raw = storeApi()?.getState?.().data?.productClassification || "Vitamina";
+  const current = normalizeProductType(raw);
+  if (current !== raw) storeApi()?.getState?.().update("productClassification", current);
   return current;
 }
 
 function selectedType() {
-  const current = currentProductType();
-  return productTypes.find((item) => item.id === current) || productTypes[2];
+  return productTypes.find((item) => item.id === currentProductType()) || productTypes[2];
 }
 
 function installProductPerceptionStyles() {
@@ -83,173 +83,36 @@ function installProductPerceptionStyles() {
   style.id = productPerceptionStyleId;
   style.textContent = `
     .docroi-product-step .field:has(select),
-    .docroi-product-step .variable-help {
-      display: none !important;
-    }
-    .docroi-product-perception {
-      display: grid;
-      gap: 14px;
-      order: -5;
-    }
-    .docroi-product-intro {
-      border: 1px solid #dce7ef;
-      border-radius: 18px;
-      background: #fff;
-      padding: 16px;
-    }
-    .docroi-product-intro h4 {
-      margin: 0 0 8px;
-      color: #05070b;
-      font-size: 20px;
-      line-height: 1.12;
-      font-weight: 950;
-    }
-    .docroi-product-intro p {
-      margin: 0;
-      color: #4b5565;
-      font-size: 14px;
-      line-height: 1.55;
-    }
-    .docroi-product-cards,
-    .docroi-product-support {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-    .docroi-product-card {
-      border: 1px solid #dce7ef;
-      border-radius: 18px;
-      background: #fff;
-      padding: 15px;
-      text-align: left;
-      cursor: pointer;
-      display: grid;
-      gap: 9px;
-      min-height: 190px;
-      box-shadow: 0 10px 22px rgba(15, 23, 42, .04);
-    }
-    .docroi-product-card[aria-pressed="true"] {
-      border-color: #003b5c;
-      box-shadow: 0 0 0 3px rgba(0, 59, 92, .12), 0 14px 28px rgba(15, 23, 42, .08);
-    }
-    .docroi-product-card span {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #05070b;
-      color: #fff;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 950;
-    }
-    .docroi-product-card strong,
-    .docroi-product-support article strong {
-      color: #003b5c;
-      font-size: 18px;
-      line-height: 1.1;
-      font-weight: 950;
-    }
-    .docroi-product-card p,
-    .docroi-product-support article p {
-      margin: 0;
-      color: #4b5565;
-      font-size: 13px;
-      line-height: 1.45;
-    }
-    .docroi-product-card small {
-      color: #111827;
-      font-size: 12px;
-      line-height: 1.35;
-      font-weight: 800;
-    }
-    .docroi-product-support {
-      order: 30;
-    }
-    .docroi-product-support article {
-      border: 1px solid #dce5ee;
-      border-radius: 18px;
-      background: #f6f7f9;
-      padding: 15px;
-      display: grid;
-      gap: 8px;
-      box-shadow: none;
-    }
-    .docroi-product-feed {
-      display: grid;
-      gap: 12px;
-      text-align: left;
-    }
-    .docroi-product-feed .feed-label {
-      display: inline-flex;
-      width: fit-content;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #eef4f7;
-      color: #111827;
-      font-size: 10px;
-      font-weight: 950;
-      text-transform: uppercase;
-      letter-spacing: .03em;
-    }
-    .docroi-product-feed h4 {
-      margin: 0;
-      color: #05070b;
-      font-size: 22px;
-      line-height: 1.08;
-      font-weight: 950;
-    }
-    .docroi-product-feed p {
-      margin: 0;
-      color: #334155;
-      font-size: 13px;
-      line-height: 1.55;
-    }
-    .docroi-product-feed article {
-      border: 1px solid #dce7ef;
-      border-radius: 14px;
-      background: #fff;
-      padding: 12px;
-    }
-    .docroi-product-feed article strong {
-      display: block;
-      margin-bottom: 5px;
-      color: #003b5c;
-      font-size: 13px;
-      font-weight: 950;
-    }
-    .docroi-product-feed article small {
-      display: block;
-      color: #475569;
-      font-size: 12px;
-      line-height: 1.45;
-      font-weight: 700;
-    }
-    .docroi-product-feed .feed-dark {
-      border-radius: 15px;
-      background: #05070b;
-      color: #fff;
-      padding: 13px;
-    }
-    .docroi-product-feed .feed-dark strong,
-    .docroi-product-feed .feed-dark p {
-      color: #fff !important;
-    }
-    @media (max-width: 720px) {
-      .docroi-product-cards,
-      .docroi-product-support { grid-template-columns: 1fr; }
-    }
+    .docroi-product-step .variable-help { display: none !important; }
+    .docroi-product-perception { display: grid; gap: 14px; order: -5; }
+    .docroi-product-intro { border: 1px solid #dce7ef; border-radius: 18px; background: #fff; padding: 16px; }
+    .docroi-product-intro h4 { margin: 0 0 8px; color: #05070b; font-size: 20px; line-height: 1.12; font-weight: 950; }
+    .docroi-product-intro p { margin: 0; color: #4b5565; font-size: 14px; line-height: 1.55; }
+    .docroi-product-cards, .docroi-product-support { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .docroi-product-card { border: 1px solid #dce7ef; border-radius: 18px; background: #fff; padding: 15px; text-align: left; cursor: pointer; display: grid; gap: 9px; min-height: 190px; box-shadow: 0 10px 22px rgba(15, 23, 42, .04); }
+    .docroi-product-card[aria-pressed="true"] { border-color: #003b5c; box-shadow: 0 0 0 3px rgba(0, 59, 92, .12), 0 14px 28px rgba(15, 23, 42, .08); }
+    .docroi-product-card span { width: 34px; height: 34px; border-radius: 50%; background: #05070b; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 950; }
+    .docroi-product-card strong, .docroi-product-support article strong { color: #003b5c; font-size: 18px; line-height: 1.1; font-weight: 950; }
+    .docroi-product-card p, .docroi-product-support article p { margin: 0; color: #4b5565; font-size: 13px; line-height: 1.45; }
+    .docroi-product-card small { color: #111827; font-size: 12px; line-height: 1.35; font-weight: 800; }
+    .docroi-product-support { order: 30; }
+    .docroi-product-support article { border: 1px solid #dce5ee; border-radius: 18px; background: #f6f7f9; padding: 15px; display: grid; gap: 8px; box-shadow: none; }
+    .docroi-product-feed { display: grid; gap: 12px; text-align: left; }
+    .docroi-product-feed .feed-label { display: inline-flex; width: fit-content; padding: 6px 10px; border-radius: 999px; background: #eef4f7; color: #111827; font-size: 10px; font-weight: 950; text-transform: uppercase; letter-spacing: .03em; }
+    .docroi-product-feed h4 { margin: 0; color: #05070b; font-size: 22px; line-height: 1.08; font-weight: 950; }
+    .docroi-product-feed p { margin: 0; color: #334155; font-size: 13px; line-height: 1.55; }
+    .docroi-product-feed article { border: 1px solid #dce7ef; border-radius: 14px; background: #fff; padding: 12px; }
+    .docroi-product-feed article strong { display: block; margin-bottom: 5px; color: #003b5c; font-size: 13px; font-weight: 950; }
+    .docroi-product-feed article small { display: block; color: #475569; font-size: 12px; line-height: 1.45; font-weight: 700; }
+    .docroi-product-feed .feed-dark { border-radius: 15px; background: #05070b; color: #fff; padding: 13px; }
+    .docroi-product-feed .feed-dark strong, .docroi-product-feed .feed-dark p { color: #fff !important; }
+    @media (max-width: 720px) { .docroi-product-cards, .docroi-product-support { grid-template-columns: 1fr; } }
   `;
   document.head.appendChild(style);
 }
 
 function supportHtml() {
-  return `
-    <div class="docroi-product-support" data-docroi-product-support="1">
-      ${supportCards.map(([title, body]) => `<article><strong>${title}</strong><p>${body}</p></article>`).join("")}
-    </div>
-  `;
+  return `<div class="docroi-product-support" data-docroi-product-support="1">${supportCards.map(([title, body]) => `<article><strong>${title}</strong><p>${body}</p></article>`).join("")}</div>`;
 }
 
 function centralPanelHtml(current: string) {
@@ -260,37 +123,24 @@ function centralPanelHtml(current: string) {
         <p>No todos los productos se compran igual. Selecciona cómo lo interpreta la persona en el momento de decidir: dolor urgente, prevención, mejora o tónico emocional/experiencial.</p>
       </div>
       <div class="docroi-product-cards">
-        ${productTypes
-          .map(
-            (item) => `
-              <button type="button" class="docroi-product-card" data-product-type="${item.id}" aria-pressed="${item.id === current}">
-                <span>${item.mark}</span>
-                <strong>${item.title}</strong>
-                <p>${item.short}</p>
-                <small>${item.behavior}</small>
-              </button>
-            `,
-          )
-          .join("")}
+        ${productTypes.map((item) => `
+          <button type="button" class="docroi-product-card" data-product-type="${item.id}" aria-pressed="${item.id === current}">
+            <span>${item.mark}</span><strong>${item.title}</strong><p>${item.short}</p><small>${item.behavior}</small>
+          </button>`).join("")}
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
 function feedHtml() {
-  const item = selectedType();
+  const selected = selectedType();
   return `
-    <div class="docroi-product-feed" data-docroi-product-feed="1">
-      <span class="feed-label">Percepción del producto · Doc ROI</span>
-      <h4>${item.title}</h4>
-      <p>La pregunta real no es qué producto vendes, sino qué representa ese producto para el Buyer Persona cuando está decidiendo. Esa percepción cambia el precio, la urgencia, la confianza, el contenido, el canal y las keywords.</p>
-      <article><strong>Concepto</strong><small>${item.short}</small></article>
-      <article><strong>Comportamiento típico</strong><small>${item.behavior}</small></article>
-      <article><strong>Ejemplos</strong><small>${item.examples}</small></article>
-      <article><strong>Variables asociadas</strong><small>${item.variables}</small></article>
-      <div class="feed-dark"><strong>Interpretación estratégica</strong><p>${item.strategy}</p></div>
-    </div>
-  `;
+    <div class="docroi-product-feed" data-docroi-product-feed="1" data-current="${selected.id}">
+      <span class="feed-label">Modelo de percepción del producto · Doc ROI</span>
+      <h4>Cómo interpreta el Buyer Persona el producto</h4>
+      <p>La pregunta real no es qué producto vendes, sino qué representa ese producto para la persona cuando decide. La percepción condiciona precio, urgencia, confianza, contenido, canal, conversión y keywords.</p>
+      ${productTypes.map((item) => `<article><strong>${item.title}</strong><small>${item.short} Conducta típica: ${item.behavior} Variables: ${item.variables}.</small></article>`).join("")}
+      <div class="feed-dark"><strong>Lectura de la opción seleccionada: ${selected.title}</strong><p>${selected.strategy}</p></div>
+    </div>`;
 }
 
 function syncSelectedButtons() {
@@ -299,10 +149,11 @@ function syncSelectedButtons() {
     button.setAttribute("aria-pressed", String(button.dataset.productType === current));
   });
   const feed = document.querySelector<HTMLElement>('[data-docroi-product-feed="1"]');
-  if (feed) feed.outerHTML = feedHtml();
+  if (feed && feed.dataset.current !== current) feed.outerHTML = feedHtml();
 }
 
 function enhanceProductStep() {
+  scheduled = false;
   installProductPerceptionStyles();
   const isProduct = productStepIsActive();
 
@@ -316,16 +167,13 @@ function enhanceProductStep() {
   }
 
   const formGrid = document.querySelector<HTMLElement>(".wizard-card .form-section .form-grid");
-  if (formGrid && !document.querySelector('[data-docroi-product-perception="1"]')) {
-    formGrid.insertAdjacentHTML("afterbegin", centralPanelHtml(currentProductType()));
-  }
-  if (formGrid && !document.querySelector('[data-docroi-product-support="1"]')) {
-    formGrid.insertAdjacentHTML("beforeend", supportHtml());
-  }
+  if (formGrid && !document.querySelector('[data-docroi-product-perception="1"]')) formGrid.insertAdjacentHTML("afterbegin", centralPanelHtml(currentProductType()));
+  if (formGrid && !document.querySelector('[data-docroi-product-support="1"]')) formGrid.insertAdjacentHTML("beforeend", supportHtml());
 
   const frame = document.querySelector<HTMLElement>(".summary-panel .education-frame");
-  if (frame && !document.querySelector('[data-docroi-product-feed="1"]')) {
-    frame.insertAdjacentHTML("beforeend", feedHtml());
+  if (frame && frame.dataset.productModel !== currentProductType()) {
+    frame.dataset.productModel = currentProductType();
+    frame.innerHTML = feedHtml();
   }
 
   document.querySelectorAll<HTMLElement>(".docroi-product-card").forEach((button) => {
@@ -342,15 +190,15 @@ function enhanceProductStep() {
 }
 
 function scheduleProductStep() {
+  if (scheduled) return;
+  scheduled = true;
   window.requestAnimationFrame(enhanceProductStep);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
   scheduleProductStep();
   const root = document.getElementById("root");
-  if (root) {
-    new MutationObserver(scheduleProductStep).observe(root, { childList: true, subtree: true });
-  }
+  if (root) new MutationObserver(scheduleProductStep).observe(root, { childList: true, subtree: true });
 });
 
 export {};
