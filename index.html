@@ -10,6 +10,88 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      window.__DOCROI_GENERATION_IMAGES__ = {
+        "Baby Boomers": "https://docroi.marketing/wp-content/uploads/2026/06/Baby-Boomers-1946-–-1964.png",
+        "Generación X": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-X-1965-–-1980.png",
+        "Millennials": "https://docroi.marketing/wp-content/uploads/2026/06/Millennials-o-Generacion-Y-1981-–-1996.png",
+        "Generación Z": "https://docroi.marketing/wp-content/uploads/2026/06/Centennials-1997-–-2012.png",
+        "Centennials": "https://docroi.marketing/wp-content/uploads/2026/06/Centennials-1997-–-2012.png",
+        "Generación Alfa": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-Alfa-2013-–-presente.png"
+      };
+
+      function docroiSetTitle() {
+        document.title = "Generación Perfil Buyer Persona con IA · Doc ROI";
+        document.querySelectorAll("h1").forEach(function (node) {
+          var text = (node.textContent || "").trim();
+          if (text === "Sistema premium de inteligencia de Buyer Persona" || text === "Sistema de Perfilado del Buyer Persona") {
+            node.textContent = "Generación Perfil Buyer Persona con IA";
+          }
+        });
+      }
+
+      function docroiGenerationImageFor(text) {
+        var map = window.__DOCROI_GENERATION_IMAGES__;
+        return Object.keys(map).find(function (key) { return text.indexOf(key) !== -1; });
+      }
+
+      function docroiFixGenerationImages() {
+        document.querySelectorAll(".generation-profile, .generation-note, .final-persona-sheet header").forEach(function (box) {
+          var img = box.querySelector("img");
+          if (!img) return;
+          var key = docroiGenerationImageFor(box.textContent || "");
+          if (key && img.src !== window.__DOCROI_GENERATION_IMAGES__[key]) {
+            img.src = window.__DOCROI_GENERATION_IMAGES__[key];
+          }
+        });
+      }
+
+      function docroiEmpathyFrameHtml() {
+        var items = [
+          ["1 · Qué piensa", "Qué piensa · Qué necesita · Qué le preocupa", "Producto · Precio · Caro o barato · ROI esperado"],
+          ["2 · Qué siente", "Qué siente · Qué emociones tiene · Qué le motiva", "Marca · Inseguridad · Satisfacción esperada"],
+          ["3 · Qué ve", "Qué ve · Qué le rodea · Qué influencias observa", "Redes sociales · Plataformas · Dónde descubre"],
+          ["4 · Qué escucha", "Qué escucha · Quién influye · Qué mensajes recibe", "Contenidos · Formatos de confianza · Expertos o influencers"],
+          ["5 · Qué dice", "Qué dice · Cómo expresa opiniones", "Qué recomendaría · Argumentos · Mensajes que compartiría"],
+          ["6 · Qué hace", "Qué hace · Cómo actúa · Cómo se comporta", "Dónde compra · Cómo compara · Online o físico · Recorrido antes de decidir"],
+          ["7 · Pains", "Qué le frustra · Qué miedo tiene", "Barreras · Dolor · Dificultad"],
+          ["8 · Gains", "Qué quiere conseguir · Qué considera éxito", "Beneficio esperado · Mejora deseada"]
+        ];
+        return '<div class="empathy-framing" data-docroi-frame="empathy"><span class="frame-label">Documento maestro · DOC ROI</span><h4>Framing del mapa de empatía</h4><p>Herramienta simple, visual y pedagógica para entender cómo una persona piensa, siente, decide, consume y se relaciona con productos, contenidos y marcas.</p><div class="empathy-frame-grid">' + items.map(function (item) {
+          return '<article><strong>' + item[0] + '</strong><small>Mapa clásico</small><p>' + item[1] + '</p><small>Aportación DOC ROI</small><p>' + item[2] + '</p></article>';
+        }).join('') + '</div><div class="frame-objective"><strong>Objetivo para el alumno</strong><p>Pensar mejor el buyer persona, conectar empatía con negocio y preparar contenidos, promociones, pricing y automatización sin convertirlo en consultoría compleja.</p></div></div>';
+      }
+
+      function docroiEnhanceEmpathyFeed() {
+        var step = (document.querySelector(".builder-head h2") || {}).textContent || "";
+        var isEmpathy = /empat/i.test(step);
+        document.querySelectorAll('[data-docroi-frame="empathy"]').forEach(function (node) {
+          if (!isEmpathy) node.remove();
+        });
+        if (!isEmpathy || document.querySelector('[data-docroi-frame="empathy"]')) return;
+        var frame = document.querySelector(".summary-panel .education-frame");
+        if (!frame) return;
+        frame.insertAdjacentHTML("beforeend", docroiEmpathyFrameHtml());
+      }
+
+      function docroiEnhanceBuyerPersona() {
+        docroiSetTitle();
+        docroiFixGenerationImages();
+        docroiEnhanceEmpathyFeed();
+      }
+
+      window.addEventListener("DOMContentLoaded", function () {
+        docroiEnhanceBuyerPersona();
+        setTimeout(docroiEnhanceBuyerPersona, 250);
+        setTimeout(docroiEnhanceBuyerPersona, 900);
+        var root = document.getElementById("root");
+        if (root) {
+          new MutationObserver(function () {
+            window.requestAnimationFrame(docroiEnhanceBuyerPersona);
+          }).observe(root, { childList: true, subtree: true, characterData: true });
+        }
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
