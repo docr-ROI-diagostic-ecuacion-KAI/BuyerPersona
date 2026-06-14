@@ -1,128 +1,175 @@
-const empathyMapStyleId = "docroi-empathy-map-replacement-style";
+const empathyLayoutStyleId = "docroi-empathy-layout-fix-style";
 
-function installEmpathyMapStyles() {
-  if (document.getElementById(empathyMapStyleId)) return;
+const generationImages: Record<string, string> = {
+  "Baby Boomer digital": "https://docroi.marketing/wp-content/uploads/2026/06/Baby-Boomers-1946-–-1964.png",
+  "Generación X digital": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-X-1965-–-1980.png",
+  "Generacion X digital": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-X-1965-–-1980.png",
+  Millennial: "https://docroi.marketing/wp-content/uploads/2026/06/Millennials-o-Generacion-Y-1981-–-1996.png",
+  "Generación Z": "https://docroi.marketing/wp-content/uploads/2026/06/Centennials-1997-–-2012.png",
+  "Generacion Z": "https://docroi.marketing/wp-content/uploads/2026/06/Centennials-1997-–-2012.png",
+  "Alpha emergente": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-Alfa-2013-–-presente.png",
+};
+
+function installEmpathyLayoutStyles() {
+  if (document.getElementById(empathyLayoutStyleId)) return;
   const style = document.createElement("style");
-  style.id = empathyMapStyleId;
+  style.id = empathyLayoutStyleId;
   style.textContent = `
-    .docroi-empathy-map-visual {
+    .docroi-empathy-profile-head {
       display: grid;
-      grid-template-columns: 1fr 1.7fr 1fr;
-      grid-template-areas:
-        "listen listen listen"
-        "see center say"
-        "do do do"
-        "pain need gain";
-      gap: 7px;
-      width: 100%;
-      margin: 12px 0;
-      padding: 10px;
-      border: 10px solid #05070b;
-      border-radius: 20px;
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      margin: 18px 0 4px;
+      padding: 18px;
+      border-radius: 22px;
       background: #05070b;
-      overflow: hidden;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 18px 42px rgba(5, 7, 11, .12);
     }
-    .docroi-empathy-map-visual > div {
-      min-height: 54px;
-      border: 1px solid #d8dee6;
-      border-radius: 11px;
+    .docroi-empathy-profile-head img {
+      width: 132px;
+      height: 132px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 3px solid rgba(255,255,255,.88);
       background: #fff;
-      color: #003b5c;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 10px 8px;
-      font-size: clamp(13px, 1.6vw, 18px);
-      line-height: 1.08;
-      font-weight: 950;
-      letter-spacing: 0;
+      display: block;
     }
-    .docroi-empathy-map-visual .listen { grid-area: listen; min-height: 58px; }
-    .docroi-empathy-map-visual .see { grid-area: see; }
-    .docroi-empathy-map-visual .say { grid-area: say; }
-    .docroi-empathy-map-visual .do { grid-area: do; min-height: 58px; }
-    .docroi-empathy-map-visual .pain { grid-area: pain; }
-    .docroi-empathy-map-visual .need { grid-area: need; }
-    .docroi-empathy-map-visual .gain { grid-area: gain; }
-    .docroi-empathy-map-visual .center {
-      grid-area: center;
-      display: grid;
-      grid-template-columns: .58fr 1.1fr .58fr;
-      gap: 6px;
-      align-items: center;
-      min-height: 84px;
+    .docroi-empathy-profile-head span,
+    .docroi-empathy-profile-head strong,
+    .docroi-empathy-profile-head p,
+    .docroi-empathy-profile-head small {
+      color: #fff !important;
     }
-    .docroi-empathy-map-visual .center span {
-      color: #003b5c;
+    .docroi-empathy-profile-head span {
+      display: inline-flex;
+      margin-bottom: 8px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.13);
       font-size: 10px;
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+    .docroi-empathy-profile-head strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 22px;
       line-height: 1.05;
       font-weight: 950;
-      text-transform: uppercase;
     }
-    .docroi-empathy-map-visual .center strong {
-      min-height: 58px;
-      border-radius: 999px;
-      background: #004b70;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 10px;
-      font-size: clamp(16px, 2vw, 22px);
-      line-height: 1.08;
-      font-weight: 950;
+    .docroi-empathy-profile-head p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.52;
+      font-weight: 650;
     }
-    @media (max-width: 900px) {
-      .docroi-empathy-map-visual { grid-template-columns: 1fr; grid-template-areas: "listen" "see" "center" "say" "do" "pain" "need" "gain"; }
-      .docroi-empathy-map-visual .center { grid-template-columns: 1fr; }
-      .docroi-empathy-map-visual .center strong { width: 100%; }
+    .docroi-empathy-profile-head small {
+      display: block;
+      margin-top: 9px;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 900;
+      opacity: .82;
+    }
+    .summary-panel .empathy-framing > .frame-label,
+    .summary-panel .empathy-framing > h4,
+    .summary-panel .empathy-framing > p,
+    .summary-panel .empathy-framing > .empathy-persona,
+    .summary-panel .empathy-framing > .docroi-empathy-map-visual,
+    .summary-panel .empathy-framing > .frame-objective {
+      display: none !important;
+    }
+    .summary-panel .empathy-framing .empathy-frame-grid {
+      margin-top: 0 !important;
+    }
+    @media (max-width: 720px) {
+      .docroi-empathy-profile-head { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+      .docroi-empathy-profile-head img { width: 116px; height: 116px; }
     }
   `;
   document.head.appendChild(style);
 }
 
-function empathyMapHtml() {
+function empathyStepIsActive() {
+  return /empat/i.test(document.querySelector(".builder-head h2")?.textContent || "");
+}
+
+function personaData(): any {
+  return (window as any).__docroiPersonaStore?.getState?.().data || {};
+}
+
+function generationImage(data: any) {
+  return data.avatarUrl || generationImages[data.digitalGeneration] || generationImages.Millennial;
+}
+
+function generationChannels(data: any) {
+  const generationProfile = document.querySelector(".generation-profile small")?.textContent?.trim();
+  return generationProfile || data.media?.join?.(", ") || "Canales y contexto digital pendientes";
+}
+
+function headerHtml(data: any) {
+  const name = data.fictionalName || data.digitalGeneration || "Buyer Persona";
   return `
-    <div class="docroi-empathy-map-visual" data-docroi-empathy-map="1" aria-label="Mapa de empatía Buyer Persona">
-      <div class="listen">Qué escucha</div>
-      <div class="see">Qué ve</div>
-      <div class="center"><span>Qué<br>piensa</span><strong>Buyer<br>Persona</strong><span>Qué<br>siente</span></div>
-      <div class="say">Qué dice</div>
-      <div class="do">Qué hace</div>
-      <div class="pain">Miedos y<br>frustraciones</div>
-      <div class="need">Necesidad central</div>
-      <div class="gain">Deseos y<br>motivaciones</div>
+    <div class="docroi-empathy-profile-head" data-docroi-empathy-profile="1">
+      <img src="${generationImage(data)}" alt="${name}">
+      <div>
+        <span>Cliente / Buyer Persona</span>
+        <strong>${name}</strong>
+        <p>Usa el rostro como ancla visual del perfil. La clave no es rellenar campos sueltos, sino construir una hipótesis humana conectada con conducta, necesidad y negocio.</p>
+        <small>${generationChannels(data)}</small>
+      </div>
     </div>
   `;
 }
 
-function replaceEmpathyPersonaBlock() {
-  installEmpathyMapStyles();
-  document.querySelectorAll<HTMLElement>(".empathy-framing .empathy-persona").forEach((node) => {
-    if (node.previousElementSibling?.getAttribute("data-docroi-empathy-map") === "1") {
-      node.remove();
-      return;
-    }
-    node.insertAdjacentHTML("beforebegin", empathyMapHtml());
-    node.remove();
-  });
+function cleanEmpathyFigures() {
+  document.querySelectorAll(".docroi-empathy-map-visual, .empathy-bridge").forEach((node) => node.remove());
 }
 
-function scheduleEmpathyMapReplacement() {
-  replaceEmpathyPersonaBlock();
-  window.setTimeout(replaceEmpathyPersonaBlock, 80);
-  window.setTimeout(replaceEmpathyPersonaBlock, 250);
-  window.setTimeout(replaceEmpathyPersonaBlock, 700);
+function movePersonaContextToMainPanel() {
+  installEmpathyLayoutStyles();
+  if (!empathyStepIsActive()) {
+    document.querySelectorAll('[data-docroi-empathy-profile="1"]').forEach((node) => node.remove());
+    return;
+  }
+
+  cleanEmpathyFigures();
+
+  const formGrid = document.querySelector<HTMLElement>(".wizard-card .form-section .form-grid");
+  if (!formGrid) return;
+
+  const existing = document.querySelector<HTMLElement>('[data-docroi-empathy-profile="1"]');
+  const data = personaData();
+  if (existing) {
+    existing.outerHTML = headerHtml(data);
+  } else {
+    formGrid.insertAdjacentHTML("afterbegin", headerHtml(data));
+  }
+
+  document.querySelectorAll<HTMLElement>(".summary-panel .empathy-framing .empathy-persona").forEach((node) => node.remove());
+  document.querySelectorAll<HTMLElement>(".summary-panel .docroi-empathy-map-visual").forEach((node) => node.remove());
+}
+
+function scheduleEmpathyLayoutFix() {
+  movePersonaContextToMainPanel();
+  window.setTimeout(movePersonaContextToMainPanel, 80);
+  window.setTimeout(movePersonaContextToMainPanel, 250);
+  window.setTimeout(movePersonaContextToMainPanel, 700);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  scheduleEmpathyMapReplacement();
+  scheduleEmpathyLayoutFix();
   const root = document.getElementById("root");
   if (root) {
-    new MutationObserver(() => window.requestAnimationFrame(scheduleEmpathyMapReplacement)).observe(root, {
+    new MutationObserver(() => window.requestAnimationFrame(scheduleEmpathyLayoutFix)).observe(root, {
       childList: true,
       subtree: true,
+      characterData: true,
     });
   }
 });
