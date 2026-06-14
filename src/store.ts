@@ -22,7 +22,13 @@ export const usePersonaStore = create<PersonaStore>()(
       setStep: (step) => set({ currentStep: Math.max(0, Math.min(14, step)) }),
       reset: () => set({ data: initialData, currentStep: 0 }),
     }),
-    { name: "doc-roi-buyer-persona" },
+    {
+      name: "doc-roi-buyer-persona-clean-2026-06",
+      partialize: (state) => ({ data: state.data }),
+      onRehydrateStorage: () => (state) => {
+        state?.setStep(0);
+      },
+    },
   ),
 );
 
