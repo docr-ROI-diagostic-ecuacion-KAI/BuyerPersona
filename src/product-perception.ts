@@ -32,15 +32,22 @@ const productTypes = [
     strategy: "Mensajes de progreso, aprendizaje, mejora continua y valor acumulado.",
   },
   {
-    id: "Estimulante experiencial",
-    mark: "E",
-    title: "Estimulante experiencial",
-    short: "Deseo, experiencia, recompensa, identidad, exclusividad o aspiración.",
+    id: "Tónico reconstituyente",
+    mark: "T",
+    title: "Tónico reconstituyente",
+    short: "Impulso emocional, aspiracional y experiencial que revitaliza deseo e identidad.",
     behavior: "Me apetece. Quiero vivir esta experiencia. Me hace ilusión.",
     examples: "viaje aspiracional, lujo, coche premium, experiencia VIP, gadgets, escapadas emocionales",
     variables: "alta carga emocional, impulso, identidad, deseo aspiracional, baja racionalidad funcional",
     strategy: "Mensajes emocionales, identidad, ilusión, experiencia, exclusividad y narrativa aspiracional.",
   },
+];
+
+const supportCards = [
+  ["Aspirina", "Dolor urgente. El contenido debe prometer alivio, rapidez, confianza inmediata y reducción clara del problema."],
+  ["Vacuna", "Prevención. El contenido debe explicar riesgos, protección, seguridad futura y coste de no actuar."],
+  ["Vitamina", "Mejora progresiva. El contenido debe hablar de crecimiento, rendimiento, aprendizaje y valor acumulado."],
+  ["Tónico reconstituyente", "Deseo y experiencia. El contenido debe activar ilusión, identidad, recompensa, aspiración y disfrute."],
 ];
 
 function storeApi() {
@@ -51,8 +58,18 @@ function productStepIsActive() {
   return /producto/i.test(document.querySelector(".builder-head h2")?.textContent || "");
 }
 
+function normalizeProductType(value: string) {
+  if (value === "Estimulante experiencial" || value === "Deseo Premium" || value === "Viagra") return "Tónico reconstituyente";
+  if (value === "Medicina" || value === "Píldora") return "Aspirina";
+  return value || "Vitamina";
+}
+
 function currentProductType() {
-  return storeApi()?.getState?.().data?.productClassification || "Vitamina";
+  const current = normalizeProductType(storeApi()?.getState?.().data?.productClassification || "Vitamina");
+  if (current !== storeApi()?.getState?.().data?.productClassification) {
+    storeApi()?.getState?.().update("productClassification", current);
+  }
+  return current;
 }
 
 function selectedType() {
@@ -65,7 +82,8 @@ function installProductPerceptionStyles() {
   const style = document.createElement("style");
   style.id = productPerceptionStyleId;
   style.textContent = `
-    .docroi-product-step .field:has(select) {
+    .docroi-product-step .field:has(select),
+    .docroi-product-step .variable-help {
       display: none !important;
     }
     .docroi-product-perception {
@@ -92,7 +110,8 @@ function installProductPerceptionStyles() {
       font-size: 14px;
       line-height: 1.55;
     }
-    .docroi-product-cards {
+    .docroi-product-cards,
+    .docroi-product-support {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
@@ -125,13 +144,15 @@ function installProductPerceptionStyles() {
       font-size: 14px;
       font-weight: 950;
     }
-    .docroi-product-card strong {
+    .docroi-product-card strong,
+    .docroi-product-support article strong {
       color: #003b5c;
       font-size: 18px;
       line-height: 1.1;
       font-weight: 950;
     }
-    .docroi-product-card p {
+    .docroi-product-card p,
+    .docroi-product-support article p {
       margin: 0;
       color: #4b5565;
       font-size: 13px;
@@ -143,14 +164,17 @@ function installProductPerceptionStyles() {
       line-height: 1.35;
       font-weight: 800;
     }
-    .docroi-product-step .variable-help {
-      order: 50;
-      margin-top: 6px;
+    .docroi-product-support {
+      order: 30;
     }
-    .docroi-product-step .variable-help article {
-      background: #f6f7f9 !important;
-      border-color: #dce5ee !important;
-      box-shadow: none !important;
+    .docroi-product-support article {
+      border: 1px solid #dce5ee;
+      border-radius: 18px;
+      background: #f6f7f9;
+      padding: 15px;
+      display: grid;
+      gap: 8px;
+      box-shadow: none;
     }
     .docroi-product-feed {
       display: grid;
@@ -213,10 +237,19 @@ function installProductPerceptionStyles() {
       color: #fff !important;
     }
     @media (max-width: 720px) {
-      .docroi-product-cards { grid-template-columns: 1fr; }
+      .docroi-product-cards,
+      .docroi-product-support { grid-template-columns: 1fr; }
     }
   `;
   document.head.appendChild(style);
+}
+
+function supportHtml() {
+  return `
+    <div class="docroi-product-support" data-docroi-product-support="1">
+      ${supportCards.map(([title, body]) => `<article><strong>${title}</strong><p>${body}</p></article>`).join("")}
+    </div>
+  `;
 }
 
 function centralPanelHtml(current: string) {
@@ -224,7 +257,7 @@ function centralPanelHtml(current: string) {
     <div class="docroi-product-perception" data-docroi-product-perception="1">
       <div class="docroi-product-intro">
         <h4>¿Qué representa el producto para este Buyer Persona?</h4>
-        <p>No todos los productos se compran igual. Selecciona cómo lo interpreta la persona en el momento de decidir: dolor urgente, prevención, mejora o experiencia aspiracional.</p>
+        <p>No todos los productos se compran igual. Selecciona cómo lo interpreta la persona en el momento de decidir: dolor urgente, prevención, mejora o tónico emocional/experiencial.</p>
       </div>
       <div class="docroi-product-cards">
         ${productTypes
@@ -278,13 +311,16 @@ function enhanceProductStep() {
   });
 
   if (!isProduct) {
-    document.querySelectorAll('[data-docroi-product-perception="1"], [data-docroi-product-feed="1"]').forEach((node) => node.remove());
+    document.querySelectorAll('[data-docroi-product-perception="1"], [data-docroi-product-feed="1"], [data-docroi-product-support="1"]').forEach((node) => node.remove());
     return;
   }
 
   const formGrid = document.querySelector<HTMLElement>(".wizard-card .form-section .form-grid");
   if (formGrid && !document.querySelector('[data-docroi-product-perception="1"]')) {
     formGrid.insertAdjacentHTML("afterbegin", centralPanelHtml(currentProductType()));
+  }
+  if (formGrid && !document.querySelector('[data-docroi-product-support="1"]')) {
+    formGrid.insertAdjacentHTML("beforeend", supportHtml());
   }
 
   const frame = document.querySelector<HTMLElement>(".summary-panel .education-frame");
