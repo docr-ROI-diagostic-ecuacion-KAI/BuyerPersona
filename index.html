@@ -8,11 +8,57 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+      .empathy-bridge {
+        display: grid !important;
+        grid-template-columns: 1fr 1.1fr 1fr !important;
+        grid-template-areas: "top top top" "left center right" "bottom bottom bottom" "pain need gain" !important;
+        gap: 10px !important;
+        background: #05070b !important;
+        border: 16px solid #05070b !important;
+        border-radius: 22px !important;
+        padding: 0 !important;
+        color: #05070b !important;
+      }
+      .empathy-bridge > div {
+        background: #fff !important;
+        border: 1px solid #d8dee6 !important;
+        border-radius: 12px !important;
+        color: #003b5c !important;
+        min-height: 72px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        font-size: 22px !important;
+        font-weight: 950 !important;
+        line-height: 1.08 !important;
+        padding: 14px !important;
+      }
+      .bridge-center { display: grid !important; gap: 8px !important; }
+      .bridge-center strong {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-width: 170px !important;
+        min-height: 76px !important;
+        border-radius: 999px !important;
+        background: #004b70 !important;
+        color: #fff !important;
+        font-size: 24px !important;
+        line-height: 1.12 !important;
+        padding: 12px 22px !important;
+      }
+      .bridge-center span {
+        color: #003b5c !important;
+        font-size: 12px !important;
+        font-weight: 950 !important;
+        text-transform: uppercase !important;
+      }
+      .bridge-need { background: transparent !important; border: 0 !important; color: #003b5c !important; }
       .empathy-framing { color: #101820; }
       .empathy-framing * { box-sizing: border-box; }
-      .empathy-framing .frame-label {
+      .empathy-framing .frame-label, .relationship-framing .frame-label {
         display: inline-flex;
-        align-items: center;
         width: fit-content;
         margin-bottom: 8px;
         padding: 5px 9px;
@@ -24,127 +70,45 @@
         letter-spacing: .02em;
         text-transform: uppercase;
       }
-      .empathy-framing h4 {
-        margin: 0 0 8px;
-        color: #05070b;
-        font-size: 20px;
-        line-height: 1.08;
-        font-weight: 950;
-        letter-spacing: 0;
-      }
-      .empathy-framing > p {
-        margin: 0 0 12px;
-        color: #334155;
-        font-size: 12px;
-        line-height: 1.45;
-      }
+      .empathy-framing h4, .relationship-framing h4 { margin: 0 0 8px; color: #05070b; font-size: 20px; line-height: 1.08; font-weight: 950; }
+      .empathy-framing > p, .relationship-framing > p { margin: 0 0 12px; color: #334155; font-size: 12px; line-height: 1.45; }
       .empathy-framing .empathy-persona {
-        display: grid;
-        grid-template-columns: 76px 1fr;
-        gap: 12px;
-        align-items: center;
-        margin: 12px 0;
-        border: 1px solid #e1e7ef;
-        border-radius: 16px;
-        background: #05070b;
-        padding: 10px;
-        color: #fff;
+        display: grid; grid-template-columns: 76px 1fr; gap: 12px; align-items: center; margin: 12px 0; border: 1px solid #e1e7ef; border-radius: 16px; background: #05070b; padding: 10px; color: #fff;
       }
-      .empathy-framing .empathy-persona img {
-        width: 76px;
-        height: 76px;
-        object-fit: cover;
-        border-radius: 14px;
-        display: block;
-      }
-      .empathy-framing .empathy-persona strong,
-      .empathy-framing .empathy-persona p,
-      .empathy-framing .empathy-persona small { color: #fff !important; }
-      .empathy-framing .empathy-persona strong {
-        display: block;
-        font-size: 13px;
-        font-weight: 900;
-        margin-bottom: 3px;
-      }
-      .empathy-framing .empathy-persona p {
-        margin: 0;
-        font-size: 12px;
-        line-height: 1.35;
-      }
-      .empathy-framing .empathy-persona small {
-        display: block;
-        margin-top: 5px;
-        font-size: 10px;
-        font-weight: 800;
-        opacity: .82;
-      }
-      .empathy-framing .empathy-frame-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 10px;
-        margin-top: 12px;
-      }
-      .empathy-framing article {
-        border: 1px solid #dce7ef;
-        border-radius: 14px;
-        background: #fff;
-        padding: 12px;
-        box-shadow: 0 8px 18px rgba(15, 23, 42, .05);
-      }
-      .empathy-framing article > strong {
-        display: block;
-        color: #05070b;
-        font-size: 14px;
-        line-height: 1.2;
-        font-weight: 950;
-        margin-bottom: 9px;
-      }
-      .empathy-framing .logic-block {
-        padding: 9px;
-        border-radius: 11px;
-        background: #f7fafc;
-        border: 1px solid #e8eef5;
-      }
-      .empathy-framing .logic-block + .logic-block { margin-top: 8px; }
-      .empathy-framing .logic-block.docroi { background: #fffaf0; border-color: #f4dfb7; }
-      .empathy-framing .logic-block small {
-        display: block;
-        margin-bottom: 6px;
-        color: #111827;
-        font-size: 10px;
-        line-height: 1.2;
-        font-weight: 950;
-        text-transform: uppercase;
-        letter-spacing: .03em;
-      }
-      .empathy-framing ul {
-        margin: 0;
-        padding-left: 16px;
-        color: #263241;
-        font-size: 11.5px;
-        line-height: 1.38;
-      }
-      .empathy-framing li + li { margin-top: 3px; }
-      .empathy-framing .frame-objective {
-        margin-top: 12px;
-        border-radius: 15px;
-        background: #05070b;
-        color: #fff;
-        padding: 13px;
-      }
-      .empathy-framing .frame-objective strong,
-      .empathy-framing .frame-objective p { color: #fff !important; }
-      .empathy-framing .frame-objective strong {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 13px;
-        font-weight: 950;
-      }
-      .empathy-framing .frame-objective p {
-        margin: 0;
-        font-size: 11.5px;
-        line-height: 1.42;
-      }
+      .empathy-framing .empathy-persona img { width: 76px; height: 76px; object-fit: cover; border-radius: 14px; display: block; }
+      .empathy-framing .empathy-persona strong, .empathy-framing .empathy-persona p, .empathy-framing .empathy-persona small { color: #fff !important; }
+      .empathy-framing .empathy-persona strong { display: block; font-size: 13px; font-weight: 900; margin-bottom: 3px; }
+      .empathy-framing .empathy-persona p { margin: 0; font-size: 12px; line-height: 1.35; }
+      .empathy-framing .empathy-persona small { display: block; margin-top: 5px; font-size: 10px; font-weight: 800; opacity: .82; }
+      .empathy-frame-grid, .relationship-levels { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 12px; }
+      .empathy-framing article, .relationship-level-card { border: 1px solid #dce7ef; border-radius: 14px; background: #fff; padding: 12px; box-shadow: 0 8px 18px rgba(15, 23, 42, .05); }
+      .empathy-framing article > strong, .relationship-level-card strong { display: block; color: #05070b; font-size: 14px; line-height: 1.2; font-weight: 950; margin-bottom: 9px; }
+      .logic-block { padding: 9px; border-radius: 11px; background: #f7fafc; border: 1px solid #e8eef5; }
+      .logic-block + .logic-block { margin-top: 8px; }
+      .logic-block.docroi { background: #fffaf0; border-color: #f4dfb7; }
+      .logic-block small { display: block; margin-bottom: 6px; color: #111827; font-size: 10px; line-height: 1.2; font-weight: 950; text-transform: uppercase; letter-spacing: .03em; }
+      .empathy-framing ul, .relationship-framing ul { margin: 0; padding-left: 16px; color: #263241; font-size: 11.5px; line-height: 1.38; }
+      .empathy-framing li + li, .relationship-framing li + li { margin-top: 3px; }
+      .frame-objective, .relationship-close { margin-top: 12px; border-radius: 15px; background: #05070b; color: #fff; padding: 13px; }
+      .frame-objective strong, .frame-objective p, .relationship-close strong, .relationship-close p { color: #fff !important; }
+      .frame-objective strong, .relationship-close strong { display: block; margin-bottom: 5px; font-size: 13px; font-weight: 950; }
+      .frame-objective p, .relationship-close p { margin: 0; font-size: 11.5px; line-height: 1.42; }
+      .relationship-builder { display: grid; gap: 12px; }
+      .relationship-intro { border: 1px solid #dce7ef; border-radius: 18px; background: #fff; padding: 16px; }
+      .relationship-intro h4 { margin: 0 0 8px; color: #05070b; font-size: 20px; }
+      .relationship-intro p { margin: 0; font-size: 14px; line-height: 1.55; }
+      .relationship-bars { display: grid; gap: 10px; }
+      .relationship-bar { border: 1px solid #dce7ef; border-radius: 16px; background: #fff; padding: 13px; }
+      .relationship-bar label { display: grid; gap: 8px; }
+      .relationship-bar span { display: flex; justify-content: space-between; gap: 12px; color: #05070b; font-weight: 950; }
+      .relationship-bar b { color: #003b5c; }
+      .relationship-bar input { width: 100%; accent-color: #003b5c; }
+      .relationship-bar small { color: #566273; line-height: 1.45; }
+      .relationship-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+      .relationship-tags span { border: 1px solid #d8ecf8; background: #eaf6fb; color: #003b5c; border-radius: 999px; padding: 8px 10px; font-size: 12px; font-weight: 900; }
+      .relationship-level-card p { margin: 0; color: #334155; font-size: 12px; line-height: 1.45; }
+      .relationship-level-card small { display: block; margin-top: 7px; color: #003b5c; font-size: 11px; font-weight: 900; line-height: 1.35; }
+      @media(max-width:720px){ .empathy-bridge{grid-template-columns:1fr!important;grid-template-areas:"top" "left" "center" "right" "bottom" "pain" "need" "gain"!important}.empathy-bridge>div{font-size:18px!important}.bridge-center strong{min-width:0!important;width:100%!important} }
     </style>
   </head>
   <body>
@@ -165,179 +129,61 @@
         "Generación Alfa": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-Alfa-2013-–-presente.png",
         "Generacion Alfa": "https://docroi.marketing/wp-content/uploads/2026/06/Generacion-Alfa-2013-–-presente.png"
       };
-
-      function docroiSetTitle() {
-        document.title = "Generacion Perfil Buyer Persona con IA · Doc ROI";
-        document.querySelectorAll("h1").forEach(function (node) {
-          var text = (node.textContent || "").trim();
-          if (text === "Sistema premium de inteligencia de Buyer Persona" || text === "Sistema de Perfilado del Buyer Persona") {
-            node.textContent = "Generacion Perfil Buyer Persona con IA";
-          }
-        });
-      }
-
-      function docroiGenerationKey(text) {
-        var map = window.__DOCROI_GENERATION_IMAGES__;
-        return Object.keys(map).find(function (key) { return (text || "").indexOf(key) !== -1; }) || "Millennial";
-      }
-
-      function docroiGenerationImageFor(text) {
-        return window.__DOCROI_GENERATION_IMAGES__[docroiGenerationKey(text)];
-      }
-
-      function docroiFixGenerationImages() {
-        document.querySelectorAll(".generation-profile, .generation-note, .final-persona-sheet header").forEach(function (box) {
-          var img = box.querySelector("img");
-          if (!img) return;
-          var src = docroiGenerationImageFor(box.textContent || "");
-          if (src && img.src !== src) img.src = src;
-        });
-      }
-
-      function docroiCurrentGenerationText() {
-        var selected = document.querySelector("select");
-        if (selected && selected.value && window.__DOCROI_GENERATION_IMAGES__[selected.value]) return selected.value;
-        var profile = document.querySelector(".generation-profile, .generation-note");
-        return profile ? profile.textContent || "" : "Millennial";
-      }
-
-      function docroiList(items) {
-        return "<ul>" + items.map(function (item) { return "<li>" + item + "</li>"; }).join("") + "</ul>";
-      }
-
-      function docroiEmpathyFrameHtml() {
-        var generationText = docroiCurrentGenerationText();
-        var image = docroiGenerationImageFor(generationText);
-        var name = (document.querySelector('.generation-profile h4') || {}).textContent || generationText || "Buyer Persona";
-        var channels = (document.querySelector('.generation-profile small') || {}).textContent || "Canales y contexto digital pendientes";
-        var items = [
-          {
-            title: "1 · Qué piensa",
-            classic: ["¿Qué piensa?", "¿Qué necesita?", "¿Qué le preocupa?"],
-            docroi: ["¿Qué piensa sobre el producto?", "¿Qué piensa sobre el precio?", "¿Qué considera caro o barato?", "¿Qué ROI espera?"]
-          },
-          {
-            title: "2 · Qué siente",
-            classic: ["¿Qué siente?", "¿Qué emociones tiene?", "¿Qué le motiva?"],
-            docroi: ["¿Qué siente sobre el producto?", "¿Qué sensación le transmite la marca?", "¿Qué inseguridad tiene?", "¿Qué satisfacción espera?"]
-          },
-          {
-            title: "3 · Qué ve",
-            classic: ["¿Qué ve?", "¿Qué le rodea?", "¿Qué influencias observa?"],
-            docroi: ["Relacionarlo con canales.", "¿Qué redes sociales utiliza?", "¿Qué plataformas consulta?", "¿Dónde descubre productos o servicios?"]
-          },
-          {
-            title: "4 · Qué escucha",
-            classic: ["¿Qué escucha?", "¿Quién influye en él?", "¿Qué mensajes recibe?"],
-            docroi: ["Relacionarlo con contenido.", "¿Qué contenidos consume?", "¿Qué formatos le generan confianza?", "¿Qué influencers o expertos sigue?"]
-          },
-          {
-            title: "5 · Qué dice",
-            classic: ["¿Qué dice?", "¿Cómo expresa sus opiniones?"],
-            docroi: ["Relacionarlo con promoción.", "¿Qué recomendaría?", "¿Qué argumentos utiliza?", "¿Qué mensajes compartiría?"]
-          },
-          {
-            title: "6 · Qué hace",
-            classic: ["¿Qué hace?", "¿Cómo actúa?", "¿Cómo se comporta?"],
-            docroi: ["Relacionarlo con distribución.", "¿Dónde compra?", "¿Cómo compara?", "¿Compra online o físico?", "¿Qué recorrido hace antes de decidir?"]
-          },
-          {
-            title: "7 · Pains",
-            classic: ["Adaptación DOC ROI: renombrar esfuerzos como pains."],
-            docroi: ["¿Qué le frustra?", "¿Qué miedo tiene?", "¿Qué barreras encuentra?", "¿Qué le genera dolor o dificultad?"]
-          },
-          {
-            title: "8 · Gains",
-            classic: ["Adaptación DOC ROI: renombrar resultados como gains."],
-            docroi: ["¿Qué quiere conseguir?", "¿Qué considera éxito?", "¿Qué beneficio espera?", "¿Qué mejora desea obtener?"]
-          }
+      var relationshipLevels = [
+        { key: "Acceso", example: "login, descarga, open data, formulario, portal privado o consulta basica", clue: "Si el usuario no puede entrar, consultar o conectar, no hay dato activable.", body: "Es la base. El usuario necesita poder acceder al dato, al servicio, al producto o al entorno digital." },
+        { key: "Informacion", example: "catalogo, precios, ficha de producto, condiciones, dashboard, disponibilidad o trazabilidad", clue: "Sin informacion clara no hay confianza suficiente para avanzar.", body: "El dato deja de estar aislado y empieza a tener contexto comprensible para el usuario." },
+        { key: "Transaccion", example: "ecommerce, ticket, matricula, reserva, suscripcion, contratacion o alta", clue: "Sin informacion no hay transaccion; sin dato no hay informacion.", body: "La informacion permite realizar una accion concreta: comprar, reservar, contratar, pagar o solicitar." },
+        { key: "Relacion", example: "CRM, emails automatizados, seguimiento comercial, atencion, SLA o fidelizacion", clue: "No puede haber relacion solida si antes no existe historial transaccional.", body: "La empresa acompaña, comunica, atiende y personaliza mas alla de un momento puntual." },
+        { key: "Experiencia", example: "recomendaciones, UX integrada, omnicanalidad, navegacion sin friccion o servicios premium", clue: "La experiencia aparece cuando el dato relacional se convierte en valor percibido.", body: "El usuario ya no busca solo resolver una necesidad funcional: busca fluidez, comodidad y coherencia." },
+        { key: "Prescripcion", example: "reseñas, recomendaciones, NPS alto, comunidad, casos de exito o embajadores", clue: "La prescripcion indica que la relacion ha generado confianza suficiente para compartirse.", body: "El usuario satisfecho recomienda, comparte, valora y amplifica la marca." },
+        { key: "Autogestion", example: "autoservicio, panel de cliente, automatizacion, APIs, marketplaces o plataformas inteligentes", clue: "La empresa diseña un ecosistema para que el usuario opere con autonomia.", body: "Nivel mas alto: el usuario gestiona por si mismo gran parte de la relacion con la empresa." }
+      ];
+      function storeApi(){ return window.__docroiPersonaStore; }
+      function storeData(){ return storeApi() && storeApi().getState ? storeApi().getState().data || {} : {}; }
+      function storePatch(value){ if(storeApi() && storeApi().getState) storeApi().getState().patch(value); }
+      function docroiSetTitle(){ document.title = "Generacion Perfil Buyer Persona con IA · Doc ROI"; document.querySelectorAll("h1").forEach(function(node){ var text=(node.textContent||"").trim(); if(text === "Sistema premium de inteligencia de Buyer Persona" || text === "Sistema de Perfilado del Buyer Persona") node.textContent = "Generacion Perfil Buyer Persona con IA"; }); }
+      function docroiGenerationKey(text){ var map=window.__DOCROI_GENERATION_IMAGES__; return Object.keys(map).find(function(key){ return (text||"").indexOf(key)!==-1; }) || "Millennial"; }
+      function docroiGenerationImageFor(text){ return window.__DOCROI_GENERATION_IMAGES__[docroiGenerationKey(text)]; }
+      function docroiFixGenerationImages(){ document.querySelectorAll(".generation-profile, .generation-note, .final-persona-sheet header").forEach(function(box){ var img=box.querySelector("img"); if(!img) return; var src=docroiGenerationImageFor(box.textContent||""); if(src && img.src!==src) img.src=src; }); }
+      function docroiCurrentGenerationText(){ var selected=document.querySelector("select"); if(selected && selected.value && window.__DOCROI_GENERATION_IMAGES__[selected.value]) return selected.value; var profile=document.querySelector(".generation-profile, .generation-note"); return profile ? profile.textContent || "" : "Millennial"; }
+      function docroiList(items){ return "<ul>" + items.map(function(item){ return "<li>" + item + "</li>"; }).join("") + "</ul>"; }
+      function docroiEmpathyFrameHtml(){
+        var generationText=docroiCurrentGenerationText(); var image=docroiGenerationImageFor(generationText); var name=(document.querySelector('.generation-profile h4')||{}).textContent || generationText || "Buyer Persona"; var channels=(document.querySelector('.generation-profile small')||{}).textContent || "Canales y contexto digital pendientes";
+        var items=[
+          {title:"1 · Que piensa",classic:["¿Que piensa?","¿Que necesita?","¿Que le preocupa?"],docroi:["¿Que piensa sobre el producto?","¿Que piensa sobre el precio?","¿Que considera caro o barato?","¿Que ROI espera?"]},
+          {title:"2 · Que siente",classic:["¿Que siente?","¿Que emociones tiene?","¿Que le motiva?"],docroi:["¿Que siente sobre el producto?","¿Que sensacion le transmite la marca?","¿Que inseguridad tiene?","¿Que satisfaccion espera?"]},
+          {title:"3 · Que ve",classic:["¿Que ve?","¿Que le rodea?","¿Que influencias observa?"],docroi:["Relacionarlo con canales.","¿Que redes sociales utiliza?","¿Que plataformas consulta?","¿Donde descubre productos o servicios?"]},
+          {title:"4 · Que escucha",classic:["¿Que escucha?","¿Quien influye en el?","¿Que mensajes recibe?"],docroi:["Relacionarlo con contenido.","¿Que contenidos consume?","¿Que formatos le generan confianza?","¿Que influencers o expertos sigue?"]},
+          {title:"5 · Que dice",classic:["¿Que dice?","¿Como expresa sus opiniones?"],docroi:["Relacionarlo con promocion.","¿Que recomendaria?","¿Que argumentos utiliza?","¿Que mensajes compartiria?"]},
+          {title:"6 · Que hace",classic:["¿Que hace?","¿Como actua?","¿Como se comporta?"],docroi:["Relacionarlo con distribucion.","¿Donde compra?","¿Como compara?","¿Compra online o fisico?","¿Que recorrido hace antes de decidir?"]},
+          {title:"7 · Pains",classic:["Adaptacion DOC ROI: renombrar esfuerzos como pains."],docroi:["¿Que le frustra?","¿Que miedo tiene?","¿Que barreras encuentra?","¿Que le genera dolor o dificultad?"]},
+          {title:"8 · Gains",classic:["Adaptacion DOC ROI: renombrar resultados como gains."],docroi:["¿Que quiere conseguir?","¿Que considera exito?","¿Que beneficio espera?","¿Que mejora desea obtener?"]}
         ];
-        return '<div class="empathy-framing" data-docroi-frame="empathy"><span class="frame-label">Documento maestro · DOC ROI</span><h4>Framing del mapa de empatía</h4><p>Herramienta simple, visual y pedagógica para ayudar al alumno a entender cómo piensa una persona, cómo siente, cómo decide, cómo consume y cómo se relaciona con productos, contenidos y marcas.</p><div class="empathy-persona"><img src="' + image + '" alt="' + name + '"><div><strong>' + name + '</strong><p>Usa el rostro como ancla visual del perfil. La clave no es rellenar campos sueltos, sino construir una hipótesis humana conectada con conducta, necesidad y negocio.</p><small>' + channels + '</small></div></div><div class="empathy-frame-grid">' + items.map(function (item) {
-          return '<article><strong>' + item.title + '</strong><div class="logic-block"><small>Mapa de empatía clásico</small>' + docroiList(item.classic) + '</div><div class="logic-block docroi"><small>Aportación DOC ROI</small>' + docroiList(item.docroi) + '</div></article>';
-        }).join('') + '</div><div class="frame-objective"><strong>Objetivo para el alumno</strong><p>Pensar mejor su buyer persona, entender comportamiento, conectar empatía con negocio y preparar posteriormente contenidos, promociones, pricing y automatización, sin convertir esta sección en una consultoría compleja.</p></div></div>';
+        return '<div class="empathy-framing" data-docroi-frame="empathy"><span class="frame-label">Documento maestro · DOC ROI</span><h4>Framing del mapa de empatia</h4><p>Herramienta simple, visual y pedagogica para entender como piensa una persona, como siente, como decide, como consume y como se relaciona con productos, contenidos y marcas.</p><div class="empathy-persona"><img src="'+image+'" alt="'+name+'"><div><strong>'+name+'</strong><p>Usa el rostro como ancla visual del perfil. La clave no es rellenar campos sueltos, sino construir una hipotesis humana conectada con conducta, necesidad y negocio.</p><small>'+channels+'</small></div></div><div class="empathy-frame-grid">'+items.map(function(item){ return '<article><strong>'+item.title+'</strong><div class="logic-block"><small>Mapa de empatia clasico</small>'+docroiList(item.classic)+'</div><div class="logic-block docroi"><small>Aportacion DOC ROI</small>'+docroiList(item.docroi)+'</div></article>'; }).join('')+'</div><div class="frame-objective"><strong>Objetivo para el alumno</strong><p>Pensar mejor su buyer persona, entender comportamiento, conectar empatia con negocio y preparar contenidos, promociones, pricing y automatizacion, sin convertir esta seccion en consultoria compleja.</p></div></div>';
       }
-
-      function docroiEnhanceEmpathyFeed() {
-        var step = (document.querySelector(".builder-head h2") || {}).textContent || "";
-        var isEmpathy = /empat/i.test(step);
-        document.querySelectorAll('[data-docroi-frame="empathy"]').forEach(function (node) {
-          if (!isEmpathy) node.remove();
-        });
-        if (!isEmpathy) return;
-        var frame = document.querySelector(".summary-panel .education-frame");
-        if (!frame) return;
-        if (!document.querySelector('[data-docroi-frame="empathy"]')) {
-          frame.innerHTML = docroiEmpathyFrameHtml();
-        }
+      function docroiRelationshipFrameHtml(){
+        return '<div class="relationship-framing" data-docroi-frame="relationship"><span class="frame-label">Evolucion del dato · DOC ROI</span><h4>Piramide relacional del dato</h4><p>Abraham Maslow propuso una jerarquia de necesidades humanas: unas necesidades basicas sostienen otras mas avanzadas. Aqui usamos esa logica como simil pedagogico para explicar la evolucion de la relacion del dato: una organizacion no puede construir experiencia, prescripcion o autogestion si antes no ha resuelto acceso, informacion, transaccion y relacion.</p><p>La piramide muestra como crece la madurez relacional entre buyer persona y empresa a medida que el dato se convierte en informacion, interaccion, vinculo, experiencia y capacidad de autogestion.</p><div class="relationship-levels">'+relationshipLevels.map(function(l,i){ return '<article class="relationship-level-card"><strong>'+(i+1)+'. '+l.key+'</strong><p>'+l.body+'</p><small>Ejemplos: '+l.example+'</small><small>Clave: '+l.clue+'</small></article>'; }).join('')+'</div><div class="relationship-close"><strong>Cierre del frame</strong><p>Esta piramide ayuda a diagnosticar que nivel relacional demanda cada buyer persona y que capacidad real tiene la empresa para responder. El error aparece cuando la empresa ofrece una propuesta de valor situada en un nivel distinto al que el usuario necesita o espera. En terminos Doc ROI, identifica fricciones entre dato, relacion, experiencia y monetizacion.</p></div></div>';
       }
-
-      function docroiRenameSlider(label, from, to) {
-        var span = label.querySelector("span");
-        if (!span) return;
-        Array.from(span.childNodes).forEach(function (node) {
-          if (node.nodeType === 3 && node.textContent.indexOf(from) !== -1) node.textContent = node.textContent.replace(from, to);
-        });
+      function docroiRelationshipBuilderHtml(){
+        var data=storeData(); var weights=data.levelWeights || {}; relationshipLevels.forEach(function(l){ if(typeof weights[l.key]!=="number") weights[l.key]= l.key==="Informacion" ? 60 : 30; });
+        var sorted=relationshipLevels.map(function(l){return {key:l.key,value:weights[l.key]||0};}).sort(function(a,b){return b.value-a.value;});
+        var primary=sorted[0] ? sorted[0].key : "Informacion"; var secondaries=sorted.slice(1,4).filter(function(x){return x.value>=35;}).map(function(x){return x.key;});
+        if(data.primaryLevel!==primary || JSON.stringify(data.secondaryLevels||[])!==JSON.stringify(secondaries)){ storePatch({levelWeights:weights, primaryLevel:primary, secondaryLevels:secondaries}); }
+        return '<div class="relationship-builder" data-docroi-relationship-builder="1"><div class="relationship-intro"><h4>Madurez relacional del dato</h4><p>No elijas un unico nivel. Marca el grado de presencia de cada capa para este Buyer Persona y este producto. El sistema detecta el nivel dominante y conserva etiquetas secundarias.</p></div><div class="relationship-tags"><span>Nivel dominante: '+primary+'</span>'+secondaries.map(function(x){return '<span>Secundario: '+x+'</span>';}).join('')+'</div><div class="relationship-bars">'+relationshipLevels.map(function(l){ var value=weights[l.key]||0; return '<div class="relationship-bar"><label><span>'+l.key+' <b>'+value+'%</b></span><input data-docroi-level="'+l.key+'" type="range" min="0" max="100" value="'+value+'"><small>'+l.body+'</small></label></div>'; }).join('')+'</div></div>';
       }
-
-      function docroiEnhancePurchase() {
-        var step = (document.querySelector(".builder-head h2") || {}).textContent || "";
-        if (!/compra/i.test(step)) return;
-        var section = document.querySelector(".wizard-card .form-section");
-        if (!section) return;
-        var intro = section.querySelector(":scope > p");
-        if (intro) intro.textContent = "Primero marca las señales principales. Después, debajo, encontrarás la explicación pedagógica de cada variable.";
-        var grid = section.querySelector(".form-grid.two");
-        var help = section.querySelector(".variable-help");
-        if (grid && help && grid.nextElementSibling !== help) grid.insertAdjacentElement("afterend", help);
-        section.querySelectorAll("label.slider").forEach(function (label) {
-          var raw = (label.querySelector("span") || {}).textContent || "";
-          if (raw.indexOf("Prueba social") !== -1) label.remove();
-          if (raw.indexOf("Sensibilidad precio") !== -1) docroiRenameSlider(label, "Sensibilidad precio", "Sensibilidad");
-          if (raw.indexOf("Satisfacción") !== -1 && raw.indexOf("Satisfacción esperada") === -1) docroiRenameSlider(label, "Satisfacción", "Satisfacción esperada");
-          if (raw.indexOf("Monetización") !== -1 && raw.indexOf("Monetización potencial") === -1) docroiRenameSlider(label, "Monetización", "Monetización potencial");
-          if (raw.indexOf("Relación reciente") !== -1) docroiRenameSlider(label, "Relación reciente", "Relación previa");
-        });
-        if (help) {
-          var copy = {
-            "Urgencia": "Nivel de rapidez con el que necesita resolver el problema. Si duele hoy, el mensaje debe ser directo y fácil de comprobar.",
-            "Sensibilidad": "Peso del precio, del riesgo o del esfuerzo en la decisión. Si es alta, explica valor, garantías y coste de no actuar.",
-            "Confianza": "Prueba o validación que necesita antes de comprar: casos, testimonios, autoridad, demo o recomendación.",
-            "Frecuencia": "Cada cuánto consume, compra, evalúa o necesita este tipo de solución.",
-            "Satisfacción esperada": "Experiencia mínima para sentir que ha valido la pena: claridad, rapidez, resultado, acompañamiento o autonomía.",
-            "Monetización potencial": "Capacidad del perfil para generar ingresos, recurrencia, recomendación o valor futuro.",
-            "Relación previa": "Último contacto, experiencia o vínculo con una solución parecida. Indica si hay que educar desde cero o continuar una conversación."
-          };
-          help.querySelectorAll("article").forEach(function (article) {
-            var titleNode = article.querySelector("strong");
-            var bodyNode = article.querySelector("p");
-            var title = (titleNode || {}).textContent || "";
-            if (title === "Prueba social") article.remove();
-            if (title === "Satisfacción" && titleNode) { titleNode.textContent = "Satisfacción esperada"; title = "Satisfacción esperada"; }
-            if (title === "Monetización" && titleNode) { titleNode.textContent = "Monetización potencial"; title = "Monetización potencial"; }
-            if (title === "Relación" && titleNode) { titleNode.textContent = "Relación previa"; title = "Relación previa"; }
-            if (copy[title] && bodyNode) bodyNode.textContent = copy[title];
-          });
-        }
+      function docroiEnhanceEmpathyFeed(){ var step=(document.querySelector(".builder-head h2")||{}).textContent||""; var isEmpathy=/empat/i.test(step); document.querySelectorAll('[data-docroi-frame="empathy"]').forEach(function(node){ if(!isEmpathy) node.remove(); }); if(!isEmpathy) return; var frame=document.querySelector(".summary-panel .education-frame"); if(frame && !document.querySelector('[data-docroi-frame="empathy"]')) frame.innerHTML=docroiEmpathyFrameHtml(); }
+      function docroiEnhanceRelationship(){
+        var step=(document.querySelector(".builder-head h2")||{}).textContent||""; var isRelationship=/evoluci/i.test(step) || /relacional/i.test(step);
+        document.querySelectorAll('[data-docroi-frame="relationship"]').forEach(function(node){ if(!isRelationship) node.remove(); });
+        if(!isRelationship) return;
+        var frame=document.querySelector(".summary-panel .education-frame"); if(frame && !document.querySelector('[data-docroi-frame="relationship"]')) frame.innerHTML=docroiRelationshipFrameHtml();
+        var section=document.querySelector(".wizard-card .form-section .form-grid"); if(section && !document.querySelector('[data-docroi-relationship-builder="1"]')) section.innerHTML=docroiRelationshipBuilderHtml();
+        document.querySelectorAll('input[data-docroi-level]').forEach(function(input){ if(input.dataset.bound) return; input.dataset.bound="1"; input.addEventListener('input', function(e){ var target=e.currentTarget; var data=storeData(); var weights=Object.assign({}, data.levelWeights || {}); weights[target.dataset.docroiLevel]=Number(target.value); var sorted=relationshipLevels.map(function(l){return {key:l.key,value:weights[l.key]||0};}).sort(function(a,b){return b.value-a.value;}); storePatch({levelWeights:weights, primaryLevel:sorted[0].key, secondaryLevels:sorted.slice(1,4).filter(function(x){return x.value>=35;}).map(function(x){return x.key;})}); window.setTimeout(docroiEnhanceBuyerPersona, 40); }); });
       }
-
-      function docroiEnhanceBuyerPersona() {
-        docroiSetTitle();
-        docroiFixGenerationImages();
-        docroiEnhanceEmpathyFeed();
-        docroiEnhancePurchase();
-      }
-
-      window.addEventListener("DOMContentLoaded", function () {
-        docroiEnhanceBuyerPersona();
-        setTimeout(docroiEnhanceBuyerPersona, 250);
-        setTimeout(docroiEnhanceBuyerPersona, 900);
-        var root = document.getElementById("root");
-        if (root) {
-          new MutationObserver(function () {
-            window.requestAnimationFrame(docroiEnhanceBuyerPersona);
-          }).observe(root, { childList: true, subtree: true, characterData: true });
-        }
-      });
+      function docroiRenameSlider(label, from, to){ var span=label.querySelector("span"); if(!span) return; Array.from(span.childNodes).forEach(function(node){ if(node.nodeType===3 && node.textContent.indexOf(from)!==-1) node.textContent=node.textContent.replace(from,to); }); }
+      function docroiEnhancePurchase(){ var step=(document.querySelector(".builder-head h2")||{}).textContent||""; if(!/compra/i.test(step)) return; var section=document.querySelector(".wizard-card .form-section"); if(!section) return; var intro=section.querySelector(":scope > p"); if(intro) intro.textContent="Primero marca las señales principales. Despues, debajo, encontraras la explicacion pedagogica de cada variable."; var grid=section.querySelector(".form-grid.two"); var help=section.querySelector(".variable-help"); if(grid && help && grid.nextElementSibling!==help) grid.insertAdjacentElement("afterend", help); section.querySelectorAll("label.slider").forEach(function(label){ var raw=(label.querySelector("span")||{}).textContent||""; if(raw.indexOf("Prueba social")!==-1) label.remove(); if(raw.indexOf("Sensibilidad precio")!==-1) docroiRenameSlider(label,"Sensibilidad precio","Sensibilidad"); if(raw.indexOf("Satisfaccion")!==-1 && raw.indexOf("Satisfaccion esperada")===-1) docroiRenameSlider(label,"Satisfaccion","Satisfaccion esperada"); if(raw.indexOf("Satisfacción")!==-1 && raw.indexOf("Satisfacción esperada")===-1) docroiRenameSlider(label,"Satisfacción","Satisfacción esperada"); if(raw.indexOf("Monetizacion")!==-1 && raw.indexOf("Monetizacion potencial")===-1) docroiRenameSlider(label,"Monetizacion","Monetizacion potencial"); if(raw.indexOf("Monetización")!==-1 && raw.indexOf("Monetización potencial")===-1) docroiRenameSlider(label,"Monetización","Monetización potencial"); if(raw.indexOf("Relacion reciente")!==-1) docroiRenameSlider(label,"Relacion reciente","Relacion previa"); if(raw.indexOf("Relación reciente")!==-1) docroiRenameSlider(label,"Relación reciente","Relación previa"); }); }
+      function docroiEnhanceBuyerPersona(){ docroiSetTitle(); docroiFixGenerationImages(); docroiEnhanceEmpathyFeed(); docroiEnhanceRelationship(); docroiEnhancePurchase(); }
+      window.addEventListener("DOMContentLoaded", function(){ docroiEnhanceBuyerPersona(); setTimeout(docroiEnhanceBuyerPersona,250); setTimeout(docroiEnhanceBuyerPersona,900); var root=document.getElementById("root"); if(root){ new MutationObserver(function(){ window.requestAnimationFrame(docroiEnhanceBuyerPersona); }).observe(root,{childList:true,subtree:true,characterData:true}); } });
     </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
