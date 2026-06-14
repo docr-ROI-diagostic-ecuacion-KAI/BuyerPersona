@@ -9,6 +9,7 @@ import "./relationship-transition-guard";
 import "./content-step-order";
 import "./product-perception";
 import "./relationship-maturity";
+import "./marketing-mix-enhancement";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
