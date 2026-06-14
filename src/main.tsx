@@ -4,6 +4,7 @@ import { App2 } from "./App2";
 import "./styles.css";
 import "./phase-guidance";
 import "./empathy-map-replacement";
+import "./navigation-hygiene";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
