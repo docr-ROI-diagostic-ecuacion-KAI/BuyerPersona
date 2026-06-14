@@ -11,6 +11,7 @@ import "./product-perception";
 import "./relationship-maturity";
 import "./marketing-mix-enhancement";
 import "./topic-clusters-enhancement-v2";
+import "./final-persona-dossier";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
