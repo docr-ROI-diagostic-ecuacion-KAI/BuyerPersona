@@ -7,6 +7,7 @@ import "./empathy-map-replacement";
 import "./navigation-hygiene";
 import "./relationship-transition-guard";
 import "./content-step-order";
+import "./product-perception";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
