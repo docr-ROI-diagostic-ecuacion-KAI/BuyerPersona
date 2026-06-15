@@ -25,6 +25,7 @@ import "./exact-footer";
 import "./session-and-feed-rules-safe";
 import "./form-scroll-stability";
 import "./final-ux-corrections";
+import "./feed-always-open";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
