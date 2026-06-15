@@ -20,6 +20,7 @@ import "./support-tools-annex";
 import "./final-tools-numbering-cleanup";
 import "./support-tools-annex-polish";
 import "./final-tools-step-separation";
+import "./final-tools-visual-cleanup";
 import "./exact-footer";
 import "./session-and-feed-rules";
 
