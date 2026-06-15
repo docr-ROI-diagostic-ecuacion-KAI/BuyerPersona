@@ -15,6 +15,7 @@ import "./channel-architecture-enhancement";
 import "./topic-clusters-enhancement-v2";
 import "./topic-clusters-polish";
 import "./final-persona-dossier-v2";
+import "./final-interpretive-feedback";
 import "./support-tools-annex";
 import "./exact-footer";
 import "./session-and-feed-rules";
