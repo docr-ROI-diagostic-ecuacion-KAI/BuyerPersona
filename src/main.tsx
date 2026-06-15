@@ -23,7 +23,7 @@ import "./final-tools-step-separation";
 import "./final-tools-visual-cleanup";
 import "./hero-and-tools-layout-polish-safe";
 import "./exact-footer";
-import "./session-and-feed-rules";
+import "./session-and-feed-rules-safe";
 import "./generation-profile-scroll-lock";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
