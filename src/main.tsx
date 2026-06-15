@@ -18,6 +18,7 @@ import "./final-persona-dossier-v2";
 import "./final-interpretive-feedback";
 import "./support-tools-annex";
 import "./final-tools-numbering-cleanup";
+import "./support-tools-annex-polish";
 import "./exact-footer";
 import "./session-and-feed-rules";
 
