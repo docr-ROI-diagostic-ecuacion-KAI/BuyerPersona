@@ -6,7 +6,7 @@ import "./phase-guidance";
 import "./empathy-map-replacement";
 import "./relationship-transition-guard";
 import "./content-step-order";
-import "./content-attraction-enhancement";
+import "./content-attraction-safe";
 import "./product-perception";
 import "./relationship-maturity";
 import "./marketing-mix-enhancement";
@@ -23,8 +23,8 @@ import "./final-tools-visual-cleanup";
 import "./hero-and-tools-layout-polish-safe";
 import "./exact-footer";
 import "./session-and-feed-rules-safe";
-import "./generation-profile-scroll-lock";
 import "./form-scroll-stability";
+import "./final-ux-corrections";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
