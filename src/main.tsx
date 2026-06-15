@@ -4,7 +4,6 @@ import { App2 } from "./App2";
 import "./styles.css";
 import "./phase-guidance";
 import "./empathy-map-replacement";
-import "./navigation-hygiene";
 import "./relationship-transition-guard";
 import "./content-step-order";
 import "./content-attraction-enhancement";
@@ -25,6 +24,7 @@ import "./hero-and-tools-layout-polish-safe";
 import "./exact-footer";
 import "./session-and-feed-rules-safe";
 import "./generation-profile-scroll-lock";
+import "./form-scroll-stability";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
