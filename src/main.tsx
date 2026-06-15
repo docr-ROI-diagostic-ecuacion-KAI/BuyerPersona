@@ -21,7 +21,7 @@ import "./final-tools-numbering-cleanup";
 import "./support-tools-annex-polish";
 import "./final-tools-step-separation";
 import "./final-tools-visual-cleanup";
-import "./hero-and-tools-layout-polish";
+import "./hero-and-tools-layout-polish-safe";
 import "./exact-footer";
 import "./session-and-feed-rules";
 
