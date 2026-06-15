@@ -7,6 +7,7 @@ import "./empathy-map-replacement";
 import "./navigation-hygiene";
 import "./relationship-transition-guard";
 import "./content-step-order";
+import "./content-attraction-enhancement";
 import "./product-perception";
 import "./relationship-maturity";
 import "./marketing-mix-enhancement";
