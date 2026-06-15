@@ -10,6 +10,7 @@ import "./content-step-order";
 import "./product-perception";
 import "./relationship-maturity";
 import "./marketing-mix-enhancement";
+import "./channel-architecture-enhancement";
 import "./topic-clusters-enhancement-v2";
 import "./topic-clusters-polish";
 import "./final-persona-dossier-v2";
