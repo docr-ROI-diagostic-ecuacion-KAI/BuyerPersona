@@ -26,6 +26,7 @@ import "./session-and-feed-rules-safe";
 import "./form-scroll-stability";
 import "./final-ux-corrections";
 import "./feed-always-open";
+import "./purchase-and-format-label-polish";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
