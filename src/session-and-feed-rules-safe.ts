@@ -22,12 +22,22 @@ function resetForNewBrowserSession() {
   sessionStorage.setItem(sessionFlag, "1");
 }
 
+function formStartElement() {
+  return document.querySelector(".builder-grid") || document.querySelector(".wizard-card") || document.getElementById("constructor");
+}
+
+function normalizeScrollTarget(element: Element | null) {
+  if (element?.id === "constructor") return formStartElement();
+  return element;
+}
+
 function scrollElementToTop(element: Element | null, behavior: ScrollBehavior = "smooth") {
-  if (!element) {
+  const target = normalizeScrollTarget(element);
+  if (!target) {
     window.scrollTo({ top: 0, behavior });
     return;
   }
-  const top = element.getBoundingClientRect().top + window.scrollY - 84;
+  const top = target.getBoundingClientRect().top + window.scrollY - 92;
   window.scrollTo({ top: Math.max(0, top), behavior });
 }
 
@@ -66,7 +76,8 @@ function handleEveryLink(event: MouseEvent) {
 
 function handleIndexButton(event: MouseEvent) {
   if (!isIndexButton(event.target)) return;
-  window.setTimeout(() => scrollElementToTop(document.getElementById("constructor"), "smooth"), 0);
+  window.setTimeout(() => scrollElementToTop(document.getElementById("constructor"), "auto"), 0);
+  window.setTimeout(() => scrollElementToTop(document.getElementById("constructor"), "auto"), 120);
 }
 
 function applyGlobalRules() {
