@@ -9,6 +9,7 @@ import "./content-step-order";
 import "./content-attraction-safe";
 import "./product-perception";
 import "./relationship-maturity";
+import "./web-functionality-demand-copy";
 import "./marketing-mix-enhancement";
 import "./channel-architecture-enhancement";
 import "./topic-clusters-enhancement-v2";
