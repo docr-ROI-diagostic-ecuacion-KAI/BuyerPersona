@@ -56,7 +56,7 @@ function storeApi() {
 
 function relationshipStepIsActive() {
   const title = document.querySelector(".builder-head h2")?.textContent || "";
-  return /evoluci/i.test(title) || /relacional/i.test(title);
+  return /evoluci/i.test(title) || /relacional/i.test(title) || /funcionalidades/i.test(title) || /web demandadas/i.test(title);
 }
 
 function installRelationshipMaturityStyles() {
@@ -208,8 +208,8 @@ function panelHtml() {
   return `
     <div class="docroi-relationship-maturity" data-docroi-relationship-maturity="1">
       <div class="docroi-relationship-intro">
-        <h4>Demanda relacional del dato</h4>
-        <p>No elijas una sola respuesta. Ajusta la intensidad de cada nivel según lo que este Buyer Persona demanda de la empresa para este producto: puede necesitar mucha autogestión, pero también información clara y relación humana.</p>
+        <h4>Funcionalidades web que demanda este Buyer Persona</h4>
+        <p>Piensa en tu página web como una pirámide de necesidades funcionales: primero debe permitir acceso, después entregar información clara, facilitar interacción, transacción, relación, experiencia, prescripción y, cuando el perfil lo pida, autogestión. Ajusta la intensidad según lo que este Buyer Persona necesita para comunicarse, confiar y avanzar.</p>
       </div>
       <div class="docroi-relationship-summary">
         <span>Nivel dominante: ${primary}</span>
@@ -231,10 +231,10 @@ function panelHtml() {
 function supportHtml() {
   return `
     <div class="docroi-relationship-support" data-docroi-relationship-support="1">
-      <article><strong>Lectura dominante</strong><p>El nivel con mayor intensidad marca qué espera principalmente el Buyer Persona de la relación con la empresa.</p></article>
-      <article><strong>Lectura secundaria</strong><p>Los niveles altos complementarios explican matices: información, relación, experiencia o autonomía pueden convivir.</p></article>
-      <article><strong>Fricción</strong><p>El error aparece cuando la empresa ofrece una experiencia por debajo o por encima del nivel que el usuario espera.</p></article>
-      <article><strong>Activación</strong><p>Esta lectura orienta contenido, canal, automatización, atención, CRM, UX y próximos pasos comerciales.</p></article>
+      <article><strong>Funcionalidad dominante</strong><p>El nivel con mayor intensidad indica qué debe resolver primero la web para este Buyer Persona.</p></article>
+      <article><strong>Funcionalidades secundarias</strong><p>Los niveles altos complementarios muestran si también necesita información, relación, experiencia, prueba social o autonomía.</p></article>
+      <article><strong>Fricción web</strong><p>El problema aparece cuando la página ofrece menos funcionalidad de la que el usuario necesita para confiar o decidir.</p></article>
+      <article><strong>Activación</strong><p>Esta lectura orienta UX, contenidos, formularios, CRM, automatización, atención y rutas de conversión.</p></article>
     </div>
   `;
 }
