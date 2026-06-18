@@ -12,6 +12,7 @@ import "./relationship-maturity";
 import "./web-functionality-demand-copy";
 import "./marketing-mix-enhancement";
 import "./channel-architecture-enhancement";
+import "./channel-taxonomy-spanish";
 import "./topic-clusters-enhancement-v2";
 import "./topic-clusters-polish";
 import "./final-persona-dossier-v2";
