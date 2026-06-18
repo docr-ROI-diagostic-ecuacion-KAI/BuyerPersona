@@ -29,6 +29,7 @@ import "./final-ux-corrections";
 import "./feed-always-open";
 import "./purchase-and-format-label-polish";
 import "./english-version";
+import "./english-persistence";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
