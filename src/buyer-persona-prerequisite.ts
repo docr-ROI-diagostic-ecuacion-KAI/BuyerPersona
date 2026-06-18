@@ -119,8 +119,8 @@ function bannerCopy() {
 
 function goToPersonaSheet() {
   const store = usePersonaStore.getState();
-  store.setStep(13);
   sessionStorage.setItem("docroi-final-visible-panel", "final");
+  store.setStep(14);
   window.setTimeout(() => {
     const target = document.querySelector(".builder-grid") || document.getElementById("constructor");
     if (!target) return;
