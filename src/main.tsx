@@ -8,6 +8,7 @@ import "./relationship-transition-guard";
 import "./content-step-order";
 import "./content-attraction-safe";
 import "./product-perception";
+import "./buyer-persona-prerequisite";
 import "./relationship-maturity";
 import "./web-functionality-demand-copy";
 import "./marketing-mix-enhancement";
