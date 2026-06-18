@@ -17,8 +17,8 @@ function currentStepTitle() {
 }
 
 function isTargetStep() {
-  if (isEnglishMode()) return false;
-  return /^(producto|marketing mix)$/i.test(currentStepTitle());
+  const title = currentStepTitle();
+  return /^(producto|product|marketing mix)$/i.test(title);
 }
 
 function installStyles() {
@@ -103,18 +103,51 @@ function installStyles() {
 
 function bannerCopy() {
   const step = currentStepTitle();
+  const english = isEnglishMode();
   if (/marketing mix/i.test(step)) {
-    return {
-      title: "Ficha Buyer Persona antes de precio",
-      body:
-        "El precio no se interpreta en abstracto. Depende de la necesidad, urgencia, confianza, barreras, pains, gains, canalidad y comportamiento que ya has construido en la Ficha Buyer Persona. Sin esa ficha, producto, precio, distribucion y comunicacion son solo opiniones sueltas.",
-    };
+    return english
+      ? {
+          kicker: "Buyer Persona Sheet - prerequisite",
+          title: "Buyer Persona Sheet before price",
+          body:
+            "Price is not interpreted in isolation. It depends on need, urgency, trust, barriers, pains, gains, channel architecture and behavior already built in the Buyer Persona Sheet. Without that sheet, product, price, distribution and communication are just loose opinions.",
+          button: "Go to the Buyer Persona Sheet",
+          feedTitle: "Start from the Buyer Persona Sheet",
+          feedBody:
+            "This model does not replace the sheet: it depends on it. Every product, price or channel decision must be grounded in the profile, pains, gains, behavior, content and channel architecture already defined.",
+        }
+      : {
+          kicker: "Ficha Buyer Persona - requisito previo",
+          title: "Ficha Buyer Persona antes de precio",
+          body:
+            "El precio no se interpreta en abstracto. Depende de la necesidad, urgencia, confianza, barreras, pains, gains, canalidad y comportamiento que ya has construido en la Ficha Buyer Persona. Sin esa ficha, producto, precio, distribucion y comunicacion son solo opiniones sueltas.",
+          button: "Ir a la Ficha Buyer Persona",
+          feedTitle: "Primero la Ficha Buyer Persona",
+          feedBody:
+            "Este modelo no sustituye la ficha: la necesita. Cada lectura de producto, precio o canal debe apoyarse en el perfil, pains, gains, comportamiento, contenido y canalidad ya definidos.",
+        };
   }
-  return {
-    title: "Este apartado parte de la Ficha Buyer Persona",
-    body:
-      "La percepcion del producto solo tiene sentido si se lee desde una persona concreta: que necesita, que teme, que valora, como compara y que evidencia le hace confiar. Primero ficha, despues interpretacion de producto.",
-  };
+  return english
+    ? {
+        kicker: "Buyer Persona Sheet - prerequisite",
+        title: "This section starts from the Buyer Persona Sheet",
+        body:
+          "Product perception only makes sense when read from a specific person: what they need, what they fear, what they value, how they compare and what evidence makes them trust. First the sheet, then the product interpretation.",
+        button: "Go to the Buyer Persona Sheet",
+        feedTitle: "Start from the Buyer Persona Sheet",
+        feedBody:
+          "This model does not replace the sheet: it depends on it. Every product, price or channel decision must be grounded in the profile, pains, gains, behavior, content and channel architecture already defined.",
+      }
+    : {
+        kicker: "Ficha Buyer Persona - requisito previo",
+        title: "Este apartado parte de la Ficha Buyer Persona",
+        body:
+          "La percepcion del producto solo tiene sentido si se lee desde una persona concreta: que necesita, que teme, que valora, como compara y que evidencia le hace confiar. Primero ficha, despues interpretacion de producto.",
+        button: "Ir a la Ficha Buyer Persona",
+        feedTitle: "Primero la Ficha Buyer Persona",
+        feedBody:
+          "Este modelo no sustituye la ficha: la necesita. Cada lectura de producto, precio o canal debe apoyarse en el perfil, pains, gains, comportamiento, contenido y canalidad ya definidos.",
+      };
 }
 
 function goToPersonaSheet() {
@@ -139,40 +172,54 @@ function ensureBanner() {
       "afterbegin",
       `
       <div class="docroi-persona-prerequisite" data-docroi-persona-prerequisite="1">
-        <span>Ficha Buyer Persona - requisito previo</span>
+        <span></span>
         <strong></strong>
         <p></p>
-        <button type="button">Ir a la Ficha Buyer Persona</button>
+        <button type="button"></button>
       </div>
     `,
     );
     banner = formGrid.querySelector<HTMLElement>('[data-docroi-persona-prerequisite="1"]');
   }
   if (!banner) return;
+  const kicker = banner.querySelector("span");
   const title = banner.querySelector("strong");
   const body = banner.querySelector("p");
+  if (kicker) kicker.textContent = copy.kicker;
   if (title) title.textContent = copy.title;
   if (body) body.textContent = copy.body;
   const button = banner.querySelector<HTMLButtonElement>("button");
-  if (button && button.dataset.bound !== "1") {
-    button.dataset.bound = "1";
-    button.addEventListener("click", goToPersonaSheet);
+  if (button) {
+    button.textContent = copy.button;
+    if (button.dataset.bound !== "1") {
+      button.dataset.bound = "1";
+      button.addEventListener("click", goToPersonaSheet);
+    }
   }
 }
 
 function ensureFeedWarning() {
   const frame = document.querySelector<HTMLElement>(".summary-panel .education-frame");
   if (!frame) return;
-  if (frame.querySelector('[data-docroi-persona-feed-warning="1"]')) return;
-  frame.insertAdjacentHTML(
-    "afterbegin",
-    `
-    <div class="docroi-persona-feed-warning" data-docroi-persona-feed-warning="1">
-      <strong>Primero la Ficha Buyer Persona</strong>
-      <p>Este modelo no sustituye la ficha: la necesita. Cada lectura de producto, precio o canal debe apoyarse en el perfil, pains, gains, comportamiento, contenido y canalidad ya definidos.</p>
-    </div>
-  `,
-  );
+  const copy = bannerCopy();
+  let warning = frame.querySelector<HTMLElement>('[data-docroi-persona-feed-warning="1"]');
+  if (!warning) {
+    frame.insertAdjacentHTML(
+      "afterbegin",
+      `
+      <div class="docroi-persona-feed-warning" data-docroi-persona-feed-warning="1">
+        <strong></strong>
+        <p></p>
+      </div>
+    `,
+    );
+    warning = frame.querySelector<HTMLElement>('[data-docroi-persona-feed-warning="1"]');
+  }
+  if (!warning) return;
+  const title = warning.querySelector("strong");
+  const body = warning.querySelector("p");
+  if (title) title.textContent = copy.feedTitle;
+  if (body) body.textContent = copy.feedBody;
 }
 
 function cleanup() {
