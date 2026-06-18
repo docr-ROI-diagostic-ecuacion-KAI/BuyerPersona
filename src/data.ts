@@ -60,11 +60,11 @@ export const initialData: BuyerPersonaData = {
   perceivedUrgency: 3,
   purchaseLogic: "racional",
   marketingMix: { product: 4, price: 3, place: 3, promotion: 4 },
-  terminals: ["Small Screen", "Medium Screen"],
-  media: ["Web", "Email", "IA conversacional"],
-  supports: ["landing pages", "newsletter", "ChatGPT"],
-  channelFormats: ["artículos", "simuladores", "plantillas"],
-  intentions: ["aprender", "comparar", "mejorar productividad"],
+  terminals: [],
+  media: [],
+  supports: [],
+  channelFormats: [],
+  intentions: [],
 };
 
 export const digitalGenerations = {
