@@ -1,3 +1,4 @@
+import { exportPdf } from "./lib/exports";
 import { buildJson } from "./lib/recommendations";
 import { usePersonaStore } from "./store";
 
@@ -79,6 +80,10 @@ async function copyJson() {
   await navigator.clipboard?.writeText(JSON.stringify(data, null, 2));
 }
 
+function downloadPdf() {
+  exportPdf(usePersonaStore.getState().data);
+}
+
 function toolsHtml() {
   const json = buildJson(usePersonaStore.getState().data);
   const schema = [
@@ -95,7 +100,7 @@ function toolsHtml() {
       <h3>15. Herramientas</h3>
       <p>Espacio final de explotación práctica de la ficha: descarga PDF, copia y descarga JSON, estructura técnica, prompts, llaves IA, activadores operativos y recursos reutilizables para automatización.</p>
       <div class="docroi-tools-actions">
-        <button type="button" data-docroi-tools-print="1">Descargar ficha PDF</button>
+        <button type="button" data-docroi-tools-print="1">Descargar ficha PDF seleccionable</button>
         <button type="button" data-docroi-tools-copy="1">Copiar JSON completo</button>
         <button type="button" data-docroi-tools-download="1">Descargar JSON</button>
       </div>
@@ -180,7 +185,7 @@ function ensureToolsContent() {
     grid.insertAdjacentHTML("beforeend", toolsHtml());
     tools = document.querySelector<HTMLElement>('[data-docroi-tools-step="1"]');
   }
-  document.querySelectorAll<HTMLButtonElement>('[data-docroi-tools-print="1"]').forEach((button) => { button.onclick = () => window.print(); });
+  document.querySelectorAll<HTMLButtonElement>('[data-docroi-tools-print="1"]').forEach((button) => { button.onclick = downloadPdf; });
   document.querySelectorAll<HTMLButtonElement>('[data-docroi-tools-copy="1"]').forEach((button) => { button.onclick = copyJson; });
   document.querySelectorAll<HTMLButtonElement>('[data-docroi-tools-download="1"]').forEach((button) => { button.onclick = downloadJson; });
 }
