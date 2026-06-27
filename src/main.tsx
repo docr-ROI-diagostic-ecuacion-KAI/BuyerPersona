@@ -35,6 +35,7 @@ import "./english-version";
 import "./english-persistence";
 import "./docroi-logo-links";
 import "./final-product-pill-cta";
+import "./wizard-navigation-stability";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
