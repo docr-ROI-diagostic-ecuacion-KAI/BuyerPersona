@@ -37,6 +37,7 @@ import "./docroi-logo-links";
 import "./final-product-pill-cta";
 import "./wizard-navigation-stability";
 import "./editable-strategy-selections-safe";
+import "./hero-official-copy";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
