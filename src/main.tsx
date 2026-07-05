@@ -38,6 +38,7 @@ import "./final-product-pill-cta";
 import "./wizard-navigation-stability";
 import "./editable-strategy-selections-safe";
 import "./hero-official-copy";
+import "./responsive-feed-layout";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
