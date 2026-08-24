@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DOC ROI · Buyer Persona System</title>
-    <link rel="icon" href="https://docroi.marketing/wp-content/uploads/2026/05/Logo_Negro_DoC_ROI.jpg" />
+    <title>Generacion Perfil Buyer Persona con IA · Doc ROI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -142,7 +141,7 @@
       function storeApi(){ return window.__docroiPersonaStore; }
       function storeData(){ return storeApi() && storeApi().getState ? storeApi().getState().data || {} : {}; }
       function storePatch(value){ if(storeApi() && storeApi().getState) storeApi().getState().patch(value); }
-      function docroiSetTitle(){ document.title = "DOC ROI · Buyer Persona System"; document.querySelectorAll("h1").forEach(function(node){ var text=(node.textContent||"").trim(); if(text === "Sistema premium de inteligencia de Buyer Persona" || text === "Sistema de Perfilado del Buyer Persona") node.textContent = "Generacion Perfil Buyer Persona con IA"; }); }
+      function docroiSetTitle(){ document.title = "Generacion Perfil Buyer Persona con IA · Doc ROI"; document.querySelectorAll("h1").forEach(function(node){ var text=(node.textContent||"").trim(); if(text === "Sistema premium de inteligencia de Buyer Persona" || text === "Sistema de Perfilado del Buyer Persona") node.textContent = "Generacion Perfil Buyer Persona con IA"; }); }
       function docroiGenerationKey(text){ var map=window.__DOCROI_GENERATION_IMAGES__; return Object.keys(map).find(function(key){ return (text||"").indexOf(key)!==-1; }) || "Millennial"; }
       function docroiGenerationImageFor(text){ return window.__DOCROI_GENERATION_IMAGES__[docroiGenerationKey(text)]; }
       function docroiFixGenerationImages(){ document.querySelectorAll(".generation-profile, .generation-note, .final-persona-sheet header").forEach(function(box){ var img=box.querySelector("img"); if(!img) return; var src=docroiGenerationImageFor(box.textContent||""); if(src && img.src!==src) img.src=src; }); }
