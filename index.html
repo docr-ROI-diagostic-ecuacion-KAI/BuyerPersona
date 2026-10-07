@@ -141,6 +141,51 @@
       function storeApi(){ return window.__docroiPersonaStore; }
       function storeData(){ return storeApi() && storeApi().getState ? storeApi().getState().data || {} : {}; }
       function storePatch(value){ if(storeApi() && storeApi().getState) storeApi().getState().patch(value); }
+
+      /* DOC ROI UX FIX · keep form focus stable while students type */
+      var DOCROI_CABINET = "https://doc-roi-my-cabinet.vercel.app/";
+      var docroiObserver = null;
+      var docroiEnhanceTimer = 0;
+      var docroiEnhancing = false;
+
+      function docroiIsFormControl(node){
+        return !!(node && node.matches && node.matches('input, textarea, select, [contenteditable="true"]'));
+      }
+      function docroiIsEditing(){ return docroiIsFormControl(document.activeElement); }
+
+      function docroiFixCabinetLinks(){
+        document.querySelectorAll('a').forEach(function(a){
+          var img=a.querySelector('img');
+          var src=img ? String(img.getAttribute('src')||'').toLowerCase() : '';
+          var alt=img ? String(img.getAttribute('alt')||'').toLowerCase() : '';
+          var aria=String(a.getAttribute('aria-label')||'').toLowerCase();
+          var isDocRoiLogo=!!img && (alt.indexOf('doc roi')!==-1 || alt.indexOf('doc·roi')!==-1 || src.indexOf('doc_roi')!==-1 || src.indexOf('doc-roi')!==-1 || src.indexOf('logo_negro_doc_roi')!==-1);
+          if(isDocRoiLogo || aria.indexOf('doc roi')!==-1 || aria.indexOf('doc·roi')!==-1){
+            a.setAttribute('href',DOCROI_CABINET);
+            a.setAttribute('target','_blank');
+            a.setAttribute('rel','noreferrer');
+          }
+        });
+      }
+
+      function docroiDisconnectObserver(){ if(docroiObserver) docroiObserver.disconnect(); }
+      function docroiObserve(){
+        var root=document.getElementById('root');
+        if(!root || !docroiObserver) return;
+        docroiObserver.observe(root,{childList:true,subtree:true});
+      }
+      function docroiRunEnhance(){
+        if(docroiEnhancing || docroiIsEditing()) return;
+        docroiEnhancing=true;
+        docroiDisconnectObserver();
+        try{ docroiEnhanceBuyerPersona(); }
+        finally{ docroiEnhancing=false; docroiObserve(); }
+      }
+      function docroiScheduleEnhance(delay){
+        window.clearTimeout(docroiEnhanceTimer);
+        if(docroiIsEditing()) return;
+        docroiEnhanceTimer=window.setTimeout(docroiRunEnhance, typeof delay==='number' ? delay : 90);
+      }
       function docroiSetTitle(){ document.title = "Generacion Perfil Buyer Persona con IA · Doc ROI"; document.querySelectorAll("h1").forEach(function(node){ var text=(node.textContent||"").trim(); if(text === "Sistema premium de inteligencia de Buyer Persona" || text === "Sistema de Perfilado del Buyer Persona") node.textContent = "Generacion Perfil Buyer Persona con IA"; }); }
       function docroiGenerationKey(text){ var map=window.__DOCROI_GENERATION_IMAGES__; return Object.keys(map).find(function(key){ return (text||"").indexOf(key)!==-1; }) || "Millennial"; }
       function docroiGenerationImageFor(text){ return window.__DOCROI_GENERATION_IMAGES__[docroiGenerationKey(text)]; }
@@ -168,7 +213,8 @@
         var data=storeData(); var weights=data.levelWeights || {}; relationshipLevels.forEach(function(l){ if(typeof weights[l.key]!=="number") weights[l.key]= l.key==="Informacion" ? 60 : 30; });
         var sorted=relationshipLevels.map(function(l){return {key:l.key,value:weights[l.key]||0};}).sort(function(a,b){return b.value-a.value;});
         var primary=sorted[0] ? sorted[0].key : "Informacion"; var secondaries=sorted.slice(1,4).filter(function(x){return x.value>=35;}).map(function(x){return x.key;});
-        if(data.primaryLevel!==primary || JSON.stringify(data.secondaryLevels||[])!==JSON.stringify(secondaries)){ storePatch({levelWeights:weights, primaryLevel:primary, secondaryLevels:secondaries}); }
+        /* Do not patch the React store while this HTML is being rendered.
+           Patching during render can force React to replace focused form nodes. */
         return '<div class="relationship-builder" data-docroi-relationship-builder="1"><div class="relationship-intro"><h4>Madurez relacional del dato</h4><p>No elijas un unico nivel. Marca el grado de presencia de cada capa para este Buyer Persona y este producto. El sistema detecta el nivel dominante y conserva etiquetas secundarias.</p></div><div class="relationship-tags"><span>Nivel dominante: '+primary+'</span>'+secondaries.map(function(x){return '<span>Secundario: '+x+'</span>';}).join('')+'</div><div class="relationship-bars">'+relationshipLevels.map(function(l){ var value=weights[l.key]||0; return '<div class="relationship-bar"><label><span>'+l.key+' <b>'+value+'%</b></span><input data-docroi-level="'+l.key+'" type="range" min="0" max="100" value="'+value+'"><small>'+l.body+'</small></label></div>'; }).join('')+'</div></div>';
       }
       function docroiEnhanceEmpathyFeed(){ var step=(document.querySelector(".builder-head h2")||{}).textContent||""; var isEmpathy=/empat/i.test(step); document.querySelectorAll('[data-docroi-frame="empathy"]').forEach(function(node){ if(!isEmpathy) node.remove(); }); if(!isEmpathy) return; var frame=document.querySelector(".summary-panel .education-frame"); if(frame && !document.querySelector('[data-docroi-frame="empathy"]')) frame.innerHTML=docroiEmpathyFrameHtml(); }
@@ -178,12 +224,59 @@
         if(!isRelationship) return;
         var frame=document.querySelector(".summary-panel .education-frame"); if(frame && !document.querySelector('[data-docroi-frame="relationship"]')) frame.innerHTML=docroiRelationshipFrameHtml();
         var section=document.querySelector(".wizard-card .form-section .form-grid"); if(section && !document.querySelector('[data-docroi-relationship-builder="1"]')) section.innerHTML=docroiRelationshipBuilderHtml();
-        document.querySelectorAll('input[data-docroi-level]').forEach(function(input){ if(input.dataset.bound) return; input.dataset.bound="1"; input.addEventListener('input', function(e){ var target=e.currentTarget; var data=storeData(); var weights=Object.assign({}, data.levelWeights || {}); weights[target.dataset.docroiLevel]=Number(target.value); var sorted=relationshipLevels.map(function(l){return {key:l.key,value:weights[l.key]||0};}).sort(function(a,b){return b.value-a.value;}); storePatch({levelWeights:weights, primaryLevel:sorted[0].key, secondaryLevels:sorted.slice(1,4).filter(function(x){return x.value>=35;}).map(function(x){return x.key;})}); window.setTimeout(docroiEnhanceBuyerPersona, 40); }); });
+        document.querySelectorAll('input[data-docroi-level]').forEach(function(input){
+          if(input.dataset.bound) return;
+          input.dataset.bound="1";
+          /* While dragging, update only the visible percentage. Do not force a React render. */
+          input.addEventListener('input', function(e){
+            var target=e.currentTarget;
+            var valueNode=target.closest('.relationship-bar') && target.closest('.relationship-bar').querySelector('b');
+            if(valueNode) valueNode.textContent=String(target.value)+'%';
+          });
+          /* Commit to the store once the interaction is complete. */
+          input.addEventListener('change', function(e){
+            var target=e.currentTarget;
+            var data=storeData();
+            var weights=Object.assign({}, data.levelWeights || {});
+            weights[target.dataset.docroiLevel]=Number(target.value);
+            var sorted=relationshipLevels.map(function(l){return {key:l.key,value:weights[l.key]||0};}).sort(function(a,b){return b.value-a.value;});
+            storePatch({levelWeights:weights, primaryLevel:sorted[0].key, secondaryLevels:sorted.slice(1,4).filter(function(x){return x.value>=35;}).map(function(x){return x.key;})});
+            docroiScheduleEnhance(120);
+          });
+        });
       }
       function docroiRenameSlider(label, from, to){ var span=label.querySelector("span"); if(!span) return; Array.from(span.childNodes).forEach(function(node){ if(node.nodeType===3 && node.textContent.indexOf(from)!==-1) node.textContent=node.textContent.replace(from,to); }); }
       function docroiEnhancePurchase(){ var step=(document.querySelector(".builder-head h2")||{}).textContent||""; if(!/compra/i.test(step)) return; var section=document.querySelector(".wizard-card .form-section"); if(!section) return; var intro=section.querySelector(":scope > p"); if(intro) intro.textContent="Primero marca las señales principales. Despues, debajo, encontraras la explicacion pedagogica de cada variable."; var grid=section.querySelector(".form-grid.two"); var help=section.querySelector(".variable-help"); if(grid && help && grid.nextElementSibling!==help) grid.insertAdjacentElement("afterend", help); section.querySelectorAll("label.slider").forEach(function(label){ var raw=(label.querySelector("span")||{}).textContent||""; if(raw.indexOf("Prueba social")!==-1) label.remove(); if(raw.indexOf("Sensibilidad precio")!==-1) docroiRenameSlider(label,"Sensibilidad precio","Sensibilidad"); if(raw.indexOf("Satisfaccion")!==-1 && raw.indexOf("Satisfaccion esperada")===-1) docroiRenameSlider(label,"Satisfaccion","Satisfaccion esperada"); if(raw.indexOf("Satisfacción")!==-1 && raw.indexOf("Satisfacción esperada")===-1) docroiRenameSlider(label,"Satisfacción","Satisfacción esperada"); if(raw.indexOf("Monetizacion")!==-1 && raw.indexOf("Monetizacion potencial")===-1) docroiRenameSlider(label,"Monetizacion","Monetizacion potencial"); if(raw.indexOf("Monetización")!==-1 && raw.indexOf("Monetización potencial")===-1) docroiRenameSlider(label,"Monetización","Monetización potencial"); if(raw.indexOf("Relacion reciente")!==-1) docroiRenameSlider(label,"Relacion reciente","Relacion previa"); if(raw.indexOf("Relación reciente")!==-1) docroiRenameSlider(label,"Relación reciente","Relación previa"); }); }
-      function docroiEnhanceBuyerPersona(){ docroiSetTitle(); docroiFixGenerationImages(); docroiEnhanceEmpathyFeed(); docroiEnhanceRelationship(); docroiEnhancePurchase(); }
-      window.addEventListener("DOMContentLoaded", function(){ docroiEnhanceBuyerPersona(); setTimeout(docroiEnhanceBuyerPersona,250); setTimeout(docroiEnhanceBuyerPersona,900); var root=document.getElementById("root"); if(root){ new MutationObserver(function(){ window.requestAnimationFrame(docroiEnhanceBuyerPersona); }).observe(root,{childList:true,subtree:true,characterData:true}); } });
+      function docroiEnhanceBuyerPersona(){ docroiSetTitle(); docroiFixGenerationImages(); docroiFixCabinetLinks(); docroiEnhanceEmpathyFeed(); docroiEnhanceRelationship(); docroiEnhancePurchase(); }
+      window.addEventListener("DOMContentLoaded", function(){
+        /* First passes cover the asynchronous React mount, but never interrupt an active field. */
+        docroiRunEnhance();
+        window.setTimeout(function(){ if(!docroiIsEditing()) docroiRunEnhance(); },250);
+        window.setTimeout(function(){ if(!docroiIsEditing()) docroiRunEnhance(); },900);
+
+        var root=document.getElementById("root");
+        if(root){
+          docroiObserver=new MutationObserver(function(){
+            /* Structural changes may need enhancement; text/value edits must never trigger DOM surgery. */
+            if(docroiEnhancing || docroiIsEditing()) return;
+            docroiScheduleEnhance(90);
+          });
+          docroiObserve();
+        }
+
+        /* Cancel pending enhancement the instant a learner starts editing. */
+        document.addEventListener('focusin', function(e){
+          if(docroiIsFormControl(e.target)) window.clearTimeout(docroiEnhanceTimer);
+        }, true);
+        document.addEventListener('pointerdown', function(e){
+          if(docroiIsFormControl(e.target)) window.clearTimeout(docroiEnhanceTimer);
+        }, true);
+
+        /* After leaving a field, safely reconcile any React DOM changes. */
+        document.addEventListener('focusout', function(e){
+          if(docroiIsFormControl(e.target)) window.setTimeout(function(){ docroiScheduleEnhance(80); },0);
+        }, true);
+      });
     </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
